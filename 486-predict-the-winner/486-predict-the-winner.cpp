@@ -24,6 +24,6 @@ public:
         for(int x: nums) tsum += x;
         vector<vector<int>> dp(nums.size() , vector<int> (nums.size(), -1));
         int s = solve(nums,0 , nums.size()-1 , dp);
-        return dp[0][nums.size()-1] >= tsum-dp[0][nums.size()-1] ? 1:0;
+        return s >= tsum-s ? 1:0;
     }
 };
