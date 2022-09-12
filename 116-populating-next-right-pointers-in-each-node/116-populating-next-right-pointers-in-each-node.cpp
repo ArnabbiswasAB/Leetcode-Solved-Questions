@@ -25,29 +25,28 @@ public:
         
         queue<Node*>q;
         q.push(root);
-        q.push(NULL);
+        
+        
         while(!q.empty()){
             
-            if(q.front() !=NULL){
-                Node* temp= q.front();
+            int n = q.size();
+            
+           for(int i=0; i<n; i++){
+                Node* node = q.front();
                 q.pop();
                 
-                temp->next=q.front();
-                
-                if(temp->left)
-                    q.push(temp->left);
-                if(temp->right)
-                    q.push(temp->right);
+                if(i == n-1)
+                    node->next = NULL;
+               else
+                   node->next = q.front();
+               
+               if(node->left)
+                   q.push(node->left);
+               if(node->right)
+                   q.push(node->right);
             }
-            else if(q.front()==NULL){
-                q.pop();
-                
-                if(q.empty())
-                    break;
-                else
-                    q.push(NULL);
-            }
-        }
-        return root; 
+        } 
+        
+       return root; 
     }
 };
