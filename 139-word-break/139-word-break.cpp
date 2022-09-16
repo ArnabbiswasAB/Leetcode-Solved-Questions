@@ -3,13 +3,13 @@ public:
      set<string> vis;
     map<string, bool> mp;
 
-    bool dfs(string s, int i, int n) {
+    bool dfs(string s,  int n) {
         if (s.size() == 0) return mp[s] = true;
         if (mp.find(s) != mp.end()) return mp[s];
         for (int l = 1; l <= s.size(); l++) {
             string t = s.substr(0, l);
             // cout << t << " ";
-            if (vis.find(t) != vis.end() and dfs(s.substr(l), i, n)) {
+            if (vis.find(t) != vis.end() and dfs(s.substr(l),  n)) {
                 // cout << t << " " ;
                 return mp[t] = true;
             }
@@ -24,6 +24,6 @@ public:
         }
         // for(auto x:vis)
         //     cout << x << " " ;
-        return dfs(s, 0, n);
+        return dfs(s,  n);
     }
 };
