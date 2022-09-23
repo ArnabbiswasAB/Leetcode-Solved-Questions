@@ -1,50 +1,42 @@
+/*
+Approach: Sliding Window 1 : Deque
+
+Here we will maintain 2 deques.
+1. maxDeque: to maintain maximum element in the window.
+2. minDeque: to maintain minimum element in the window.
+
+If maxDeque.front() - minDeque.front() > limit: Invalid Window : we will shrink it by removing elements 
+from the start until we hit a valid window[maxDeque.front() - minDeque.front() <= limit]
+*/
+// TC: O(N)
+// SC: O(N)
 class Solution {
 public:
-    int longestSubarray(vector<int>& nums, int limit) {
-         if(nums.size()==1)return 1;
-        int i=0;
-        int j=0;
-        int result=0;
-        int count=0;
-        deque<int>max_dq;
-        deque<int>min_dq;
-        // Variable size window problem
-        while(j<nums.size())
-        {
-            // Do pre-calculation
+    int longestSubarray(vector<int>& arr, int limit) {
+        int i = 0, j = 0, n = arr.size(), maxLen = 0;
+        deque<int> maX, miN;
+        
+        while(j < n){
+            // Removing all smaller element then current element and then we will put current element.
+            while(!maX.empty() && maX.back() < arr[j]) maX.pop_back();
             
-               // Calculatoin for max element in window
-                while(!max_dq.empty()&&nums[max_dq.back()]<nums[j])
-                    max_dq.pop_back();
-                max_dq.push_back(j);
+            // Removing all greater element then current element and then we will put current element.
+            while(!miN.empty() && miN.back() > arr[j]) miN.pop_back();
             
-            // Calculation for min elemetn in window
-               while(!min_dq.empty()&&nums[min_dq.back()]>nums[j])
-                   min_dq.pop_back();
-             min_dq.push_back(j);
+            maX.push_back(arr[j]);
+            miN.push_back(arr[j]);
             
-            // Play with Condition
+            // Invalid -> Valid Window
+            while(maX.front() - miN.front() > limit && i < j){
+                if(arr[i] == miN.front()) miN.pop_front();
+                if(arr[i] == maX.front()) maX.pop_front();
+                i++;
+            }
             
-            
-                while(abs(nums[j]-nums[min_dq.front()])>limit||abs(nums[j]-nums[max_dq.front()])>limit)
-                {
-                    // Remove the calculation for i
-                    if(min_dq.front()==i)
-                        min_dq.pop_front();
-                    if(max_dq.front()==i)
-                        max_dq.pop_front();
-                    i++;
-                }
-            
-            // store result
-            result=max(result,j-i+1);
+            // We always hit a valid window, at this point.
+            maxLen = max(maxLen, j - i + 1);
             j++;
-            
         }
-        return result;
+        return maxLen;
     }
 };
-
-// Time Complexity: O(2*n)
-// Space Complexity: O(2*n)
-  
