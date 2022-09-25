@@ -13,7 +13,8 @@ public:
 
         if(nums[mid] == target)
         {
-            ans = mid;
+             ans = mid;
+            return ans;
             low = mid + 1;
         }
         else if(nums[mid] < target)
