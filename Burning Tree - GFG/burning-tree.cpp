@@ -147,7 +147,7 @@ class Solution {
              }
          }
          
-         if(fl)
+         if(!q.empty())
          ans++;
         }
         
