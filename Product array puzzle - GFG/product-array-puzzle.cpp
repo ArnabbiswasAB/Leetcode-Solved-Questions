@@ -20,20 +20,20 @@ class Solution{
         
         vector<long long>ans;
         vector<long long>product(n,1);
-        prefix[0] = 1;
+        product[0] = 1;
         
         for(int i=1; i<n; i++){
-            prefix[i] = prefix[i-1]*nums[i-1];
+            product[i] = product[i-1]*nums[i-1];
         }
         
         long long suffix = 1;
         for(int i=n-1; i>=0; i--){
-            prefix[i] = prefix[i] * suffix;
+            product[i] = product[i] * suffix;
             suffix = suffix * nums[i];
         }
         
         
-        return prefix;
+        return product;
     }
 };
 
