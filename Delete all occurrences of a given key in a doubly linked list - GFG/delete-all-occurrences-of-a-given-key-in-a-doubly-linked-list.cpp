@@ -50,51 +50,34 @@ class Solution {
   public:
   
  
+   void deleteNode(struct Node** head_ref, struct Node* curr){
+        if (*head_ref == NULL || curr == NULL)
+            return;
+     
+        if (*head_ref == curr)
+            *head_ref = curr->next;
+     
+        if (curr->next != NULL)
+            curr->next->prev = curr->prev;
+    
+        if (curr->prev != NULL)
+            curr->prev->next = curr->next;
+     
+        free(curr);
+    }
+  
     void deleteAllOccurOfX(struct Node** head_ref, int x) {
-        // Write your code here
-      
-        Node *head=*head_ref;
-
-       if(head==NULL) return;
-
-       if(head->next==NULL && head->data==x) {
-           head->data=-1;
-          return;
-       }
-
-       
-
-      Node *forward=head->next;
-      while(forward!=NULL && head!=NULL){
-
-           if(head->data==x ){
-
-               head->data=forward->data;
-
-               head->next=forward->next;
-
-               forward=head->next;
-
-           }
-
-           else{
-
-               head=forward;
-
-               forward=forward->next;
-
-           }
-
-       }
-
-       
-
-       if(head!=NULL && head->data==x){
-
-           head->prev->next=NULL;
-
-       }
-   
+        struct Node* current = *head_ref;
+        struct Node* next;
+        while(current!=NULL){
+            if(current->data == x){
+                next  = current->next;
+                deleteNode(head_ref, current);
+                current = next;
+            }else{
+                current = current->next;
+            }
+        }
     }
 };
 
