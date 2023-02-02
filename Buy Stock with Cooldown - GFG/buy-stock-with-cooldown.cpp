@@ -31,8 +31,28 @@ class Solution{
     long long maximumProfit(vector<long long>&prices, int n) {
         // Code here
         
-        vector<vector<long long>> dp(n, vector<long long>(2,-1));
-        return f(0,0,prices,dp);
+        vector<vector<long long>> dp(n+2, vector<long long>(2,0));
+     //   return f(0,0,prices,dp);
+     
+     
+     for(int i=n-1; i>=0; i--){
+         for(int buy =0; buy<2; buy++){
+             
+             long long profit = 0;
+             
+             if(buy == 0){
+                 profit = max(-prices[i] + dp[i+1][1], dp[i+1][0]);
+             }
+             
+             if(buy == 1){
+                 profit = max(prices[i] + dp[i+2][0], dp[i+1][1]);
+             }
+             
+             dp[i][buy] = profit;
+         }
+     }
+     
+     return dp[0][0];
     }
 };
 
