@@ -9,50 +9,52 @@ using namespace std;
 
 class Solution{
 public:
+
     
-    bool palin(int i, int j, string s){
-     
-     while(i<=j){
-         if(s[i] != s[j])
-         return false;
-         
-         i++;
-         j--;
-     }
-     
-     return true;
-    } 
+    bool palindrome(string s, int i, int j){
+        
+        while(i<=j){
+             
+             if(s[i] != s[j])
+             return false;
+             
+             i++; 
+             j--;
+        }
+        
+        return true;
+    }
     
     
-    
-    int f(string &str,int ind,int n, vector<int>& dp){
+    int f(string s,int i, vector<int>& dp){
        
-       if(ind == str.size())
-       return 0;
-       
-       if(dp[ind] != -1)
-       return dp[ind];
-       
-       
-       int ans = INT_MAX;
-       for(int k = ind; k<n; k++){
-           
-           if(palin(ind,k,str)){
-               
-               int cost = 1 + f(str,k+1,n,dp);
-               ans = min(ans,cost);
-           }
-       }
-       return dp[ind] = ans;
+          if(i == s.size())
+            return 0;
+        
+          if(dp[i] != -1)
+          return dp[i];
+          
+          int cuts = INT_MAX;
+          
+          for(int k = i; k<s.length(); k++){
+              
+              if(palindrome(s,i,k)){
+                  int cost = 1 + f(s,k+1,dp);
+                  cuts = min(cuts,cost);
+              }
+          }
+          
+          
+          return dp[i] = cuts;
     }
     
     
     int palindromicPartition(string str)
     {
         // code here
+       vector<int>dp(str.size(),-1);
+       return f(str,0,dp) - 1;
         
-        vector<int>dp(str.size(),-1);
-        return f(str,0,str.size(),dp) - 1;
     }
 };
 
