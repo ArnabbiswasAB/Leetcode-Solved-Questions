@@ -10,44 +10,38 @@ using namespace std;
 
 class Solution{
     public:
-    void dfs(int i, int j, int m, int n,string ans,vector<vector<int>>&grid, vector<string>&answer)
-    {
+    
+    void dfs(int i,int j,int n, vector<vector<int>>& m,string s,vector<string>& ans){
         
-        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]==0)
+        if(i<0 || j<0 || i>=m.size() || j>=m[0].size() || m[i][j] == 0)
         return;
         
-        
-        if(i==n-1 && j==n-1)
+        if(i == n-1 && j == n-1)
         {
-            answer.push_back(ans);
+            ans.push_back(s);
             return;
         }
         
-        grid[i][j] = 0;
+        m[i][j] = 0;
+        dfs(i+1,j,n,m,s+'D',ans);
+        dfs(i-1,j,n,m,s+'U',ans);
+        dfs(i,j+1,n,m,s+'R',ans);
+        dfs(i,j-1,n,m,s+'L',ans);
+    
         
-        dfs(i+1,j,m,n, ans + 'D', grid , answer);
-        dfs(i-1,j,m,n, ans + 'U', grid , answer);
-        dfs(i,j+1,m,n, ans + 'R', grid , answer);
-        dfs(i,j-1,m,n, ans + 'L', grid , answer);
-        
-        grid[i][j] = 1;
-        
+        m[i][j] = 1;
         return;
     }
     
-    
-    vector<string> findPath(vector<vector<int>> &grid, int n) {
+    vector<string> findPath(vector<vector<int>> &m, int n) {
         // Your code goes here
-       
         
-        vector<string>answer;
-        string ans="";
+        vector<string>ans;
+        if(m[0][0] == 0)
+        return ans;
         
-        
-        dfs(0,0,n,n, ans,grid,answer);
-        return answer;        
-                
-        
+        dfs(0,0,n,m,"",ans);
+        return ans;
     }
 };
 
