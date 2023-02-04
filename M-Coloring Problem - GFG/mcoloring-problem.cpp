@@ -8,7 +8,7 @@ class Solution{
 public:
     // Function to determine if graph can be coloured with at most M colours such
     // that no two adjacent vertices of graph are coloured with same colour.
-    bool isSafe(int node, int color[], int col,int N,bool graph[101][101]) {
+     bool isSafe(int node, int color[], int col,int N,bool graph[101][101]) {
         
         for(int k=0; k<N; k++){
             
