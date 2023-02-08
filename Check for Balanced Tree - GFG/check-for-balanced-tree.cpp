@@ -123,9 +123,11 @@ class Solution{
         return max(left,right) + 1;
     }
     
+    
     bool isBalanced(Node *root)
     {
         //  Your Code here
+        
         if(!root)
         return true;
         
