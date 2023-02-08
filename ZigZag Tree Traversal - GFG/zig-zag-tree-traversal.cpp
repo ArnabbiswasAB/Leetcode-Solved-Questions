@@ -107,9 +107,6 @@ class Solution{
     {
     	// Code here
     	
-    	if(!root)
-    	return {};
-    	
     	vector<int>ans;
     	queue<Node*>q;
     	q.push(root);
@@ -118,33 +115,31 @@ class Solution{
     	while(!q.empty()){
     	    
     	    int size = q.size();
-    	    vector<int>temp(size);
-    	    
-    	    for(int i = 0; i<size; i++){
-    	     
-    	     Node* node = q.front();
-    	     q.pop();
-    	     
-    	       int index = (flag) ? i : (size - 1 - i);
-              temp[index] = node -> data;
-              
-    	     if(node->left)
-    	     q.push(node->left);
-    	     
-    	     if(node->right)
-    	     q.push(node->right);
-    	     
-    	    
+    	    vector<int>curr;
+    	    for(int i=0; i<size; i++){
+    	        
+    	        Node* temp = q.front();
+    	        q.pop();
+    	        
+    	         curr.push_back(temp->data);
+    	        if(temp->left)
+    	           q.push(temp->left);
+    	           
+    	        if(temp->right)
+    	           q.push(temp->right);
     	    }
-    	     
-    	     for(int i=0; i<temp.size(); i++){
-    	     ans.push_back(temp[i]);
-    	     }
-    	     
-    	     flag =  !flag;
     	    
-    	    
-    	    
+    	    if(flag){
+    	        for(int i=0; i<curr.size(); i++)
+    	        ans.push_back(curr[i]);
+    	        
+    	        flag = !flag;
+    	    }else{
+    	        for(int i=curr.size()-1; i>=0; i--)
+    	        ans.push_back(curr[i]);
+    	        
+    	        flag = !flag;
+    	    }
     	}
     	
     	return ans;
