@@ -5,43 +5,34 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
 public:
-    bool check(int src, int color[], vector<int> adj[]){
-      
-      color[src] = 1;
-      queue<int>q;
-      q.push(src);
-      
-      while(!q.empty()){
-          int u = q.front();
-          q.pop();
-          
-          for(auto it : adj[u]){
-              if(color[it] == -1){
-                  color[it] = 1 - color[u];
-                  q.push(it);
-              }else if(color[it] == color[u]){
-                  return false;
-              }
-          }
-      }
-      
-      return true;
+
+bool bipartiteDfs(int node, vector<int> adj[], int color[]) {
+    for(auto it : adj[node]) {
+        if(color[it] == -1) {
+            color[it] = 1 - color[node];
+            if(!bipartiteDfs(it, adj, color)) {
+                return false; 
+            }
+        } else if(color[it] == color[node]) return false; 
     }
-    
-    
-	bool isBipartite(int V, vector<int>adj[]){
+    return true; 
+}
+
+
+	bool isBipartite(int n, vector<int>adj[]){
 	    // Code here
-	    int color[V];
-	    memset(color,-1,sizeof(color));
 	    
-	    for(int i=0; i<V; i++){
-	        if(color[i] == -1){
-	            if(check(i,color,adj) == false)
-	            return false;
-	        }
-	    }
-	    
-	    return true;
+	   int color[n];
+    memset(color, -1, sizeof color); 
+    for(int i = 0;i<n;i++) {
+        if(color[i] == -1) {
+            color[i] = 1;
+            if(!bipartiteDfs(i, adj, color)) {
+                return false;
+            }
+        } 
+    }
+    return true; 
 	}
 
 };
