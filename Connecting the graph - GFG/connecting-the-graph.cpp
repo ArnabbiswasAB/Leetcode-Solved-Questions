@@ -6,95 +6,100 @@ using namespace std;
 // } Driver Code Ends
 // User function Template for C++
 
-
-class DisjointSet{
-    public:
+class disjointSet{
+    
+    public :
     vector<int>rank,parent,size;
-    DisjointSet(int n){
+    
+    disjointSet(int n){
         rank.resize(n+1,0);
         size.resize(n+1,1);
         parent.resize(n+1);
+        
         for(int i=0; i<n; i++){
             parent[i] = i;
         }
     }
-
+    
     int findPar(int node){
-        if(node == parent[node])
+        if(parent[node] == node)
         return node;
-
+        
         return parent[node] = findPar(parent[node]);
     }
-
-    void UnionRank(int u, int v){
+    
+    void unionSize(int u, int v){
+        
         int u_p = findPar(u);
         int v_p = findPar(v);
-
+        
         if(u_p == v_p)
-        return ;
-
+        return;
+        
+        if(size[u_p] < size[v_p]){
+            parent[u_p] = v_p;
+            size[v_p] += size[u_p];
+        }
+        else{
+            parent[v_p] = u_p;
+            size[u_p] += size[v_p];
+        }
+    }
+    
+    void unionRank(int u, int v){
+        
+        int u_p = findPar(u);
+        int v_p = findPar(v);
+        
+        if(u_p == v_p)
+        return;
+        
         if(rank[u_p] < rank[v_p]){
             parent[u_p] = v_p;
         }
         else if(rank[v_p] < rank[u_p]){
             parent[v_p] = u_p;
-        }else{
+        }
+        else{
             parent[v_p] = u_p;
             rank[u_p]++;
         }
     }
-
-
-    void UnionSize(int u, int v){
-        int u_p = findPar(u);
-        int v_p = findPar(v);
-
-        if(u_p == v_p)
-        return;
-
-        if(size[u_p] < size[v_p]){
-            parent[u_p] = v_p;
-            size[v_p] += size[u_p];
-        }else{
-            parent[v_p] = u_p;
-            size[u_p] += size[v_p];
-        }
-    }
+    
 };
-
 
 
 class Solution {
   public:
-    int Solve(int n, vector<vector<int>>& edges) {
+    int Solve(int n, vector<vector<int>>& edge) {
         // code here
         
-         DisjointSet ds(n);
-          int cntExtras = 0;
-
-          for(auto it : edges){
-              int u = it[0];
-              int v = it[1];
-
-              if(ds.findPar(u) == ds.findPar(v)){
-                  cntExtras++;
-              }else{
-                  ds.UnionSize(u,v);
-              }
-          }
-
-          int cnt = 0;
-          for(int i=0; i<n; i++){
-              if(i == ds.findPar(i))
-              cnt++;
-          }
-
-          int ans = cnt - 1;
-          if(cntExtras >= ans)
-            return ans;
-
-          return -1;  
-          
+        int extra = 0;
+        disjointSet ds(n);
+        
+        for(auto it : edge){
+           
+           int u = it[0], v = it[1];
+           
+           if(ds.findPar(u) == ds.findPar(v)){
+               extra++;
+           }
+           else{
+               ds.unionSize(u,v);
+           }
+        }
+        
+        int count = 0;
+        for(int i=0; i<n; i++){
+            if(i == ds.findPar(i))
+            count++;
+        }
+        
+        int ans = count - 1;
+        if(extra >= ans)
+        return ans;
+        
+        return -1;
     }
 };
 
