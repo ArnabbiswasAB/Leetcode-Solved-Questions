@@ -9,13 +9,13 @@ class Solution{
     int longestUniqueSubsttr(string s){
         //code
         
-      /*  unordered_map<char,int>mp;
+        vector<int>mp(256,-1);
         int ans = 0, i = 0, j = 0, n = s.length();
         
         while(i<n){
             
-            if(mp.find(s[i]) != mp.end())
-              j = max(mp[s[i]]+1,);
+            if(mp[s[i]] != -1)
+              j = max(mp[s[i]]+1,j);
               
               
               mp[s[i]] = i;
@@ -24,9 +24,9 @@ class Solution{
         }
         
         return ans;
-        */
         
-        vector<int>mp(256,0);
+        
+    /*    vector<int>mp(256,0);
         int ans = 0, i = 0, j = 0, n = s.length();
         
         
@@ -45,6 +45,7 @@ class Solution{
         
         
         return ans;
+        */
     }
 };
 
