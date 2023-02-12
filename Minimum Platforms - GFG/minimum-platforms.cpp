@@ -14,23 +14,23 @@ class Solution{
     {
     	// Your code here
     	
-    	int ans = 0;
-    	sort(arr, arr + n);
-    	sort(dep, dep + n);
+    	sort(arr, arr+n);
+    	sort(dep, dep+n);
     	
-    	int i=0, j=0, platforms = 0;
+    	int platform = 1, i = 1, j = 0, ans = 1;
     	
-    	while(i<n && j<n){
+    	while(i<n){
     	    
     	    if(arr[i] <= dep[j]){
-    	        platforms++;
+    	        platform++;
     	        i++;
-    	    }else{
-    	        platforms--;
+    	    }
+    	    else{
+    	        platform--;
     	        j++;
     	    }
     	    
-    	    ans = max(ans,platforms);
+    	    ans = max(ans, platform);
     	}
     	
     	return ans;
