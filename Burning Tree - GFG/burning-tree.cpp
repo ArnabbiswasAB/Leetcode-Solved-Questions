@@ -84,85 +84,77 @@ Node *buildTree(string str) {
 
 class Solution {
   public:
-  void dfs(Node* root, int target,unordered_map<Node*,Node*>& parent_node,Node* &res ){
+  
+  void markParent(Node* root, Node* &node, int target, unordered_map<Node*,Node*>& mp){
       
-      queue<Node*>q;
-      q.push(root);
-      parent_node[root] = NULL;
-      
-      while(!q.empty()){
-          
-          Node* node = q.front();
-          q.pop();
-          
-          if(node->data == target)
-          res = node;
-          
-          if(node->left){
-              parent_node[node->left] = node;
-              q.push(node->left);
-          }
-          
-          if(node->right){
-              parent_node[node->right] = node;
-              q.push(node->right);
-          }
-      }
-      
+       queue<Node*>q;
+       q.push(root);
+       
+       while(!q.empty()){
+           
+           Node* temp = q.front();
+           q.pop();
+           
+           if(temp->data == target)
+           node = temp;
+           
+           if(temp->left){
+               q.push(temp->left);
+               mp[temp->left] = temp;
+           }
+           
+           if(temp->right){
+               q.push(temp->right);
+               mp[temp->right] = temp;
+           }
+       }
   }
   
-  int findTime( Node* target, unordered_map<Node*,Node*>&parent_node){
-        
-        unordered_map<Node*,bool>vis;
-        vis[target] = true;
-        queue<Node*>q;
-        int ans = 0;
-        q.push(target);
-        
-        while(!q.empty()){
-         
-         int size = q.size();
-         int fl = 0;
-         
-         for(int i=0; i<size; i++){
-             Node* src = q.front();
-             q.pop();
-             
-             if(src->left && !vis[src->left]){
-                 q.push(src->left);
-                  fl = 1; 
-                 vis[src->left] = true;
-             }
-             
-             if(src->right && !vis[src->right]){
-                 q.push(src->right);
-                  fl = 1; 
-                 vis[src->right] = true;
-             }
-             
-             if(parent_node[src] && !vis[parent_node[src]]){
-                 q.push(parent_node[src]);
-                  fl = 1; 
-                 vis[parent_node[src]] = true;
-             }
-         }
-         
-         if(!q.empty())
-         ans++;
-        }
-        
-        return ans;
-  }
   
     int minTime(Node* root, int target) 
     {
         // Your code goes here
-        unordered_map<Node*,Node*>parent_node;
+        unordered_map<Node*,Node*>mp;
+        unordered_map<Node*, bool>vis;
         Node* node = NULL;
-        dfs(root, target, parent_node, node);
-        int ans = findTime(node,parent_node); 
         
-        return ans;
+        markParent(root,node,target,mp);
+        queue<Node*>q;
+        q.push(node);
+        int times = 0;
+        vis[node] = true;
+        
+        while(!q.empty()){
+            
+            int n = q.size();
+            
+            
+            for(int i=0; i<n; i++){
+                Node* temp = q.front();
+                q.pop();
+                
+                
+                if(temp->left && !vis[temp->left]){
+                    q.push(temp->left);
+                    vis[temp->left] = true;
+                }
+                
+                if(temp->right && !vis[temp->right])
+                {
+                    q.push(temp->right);
+                    vis[temp->right] = true;
+                }
+                
+                if(mp[temp] && !vis[mp[temp]]){
+                    q.push(mp[temp]);
+                    vis[mp[temp]] = true;
+                }
+            }
+            if(!q.empty())
+            times++;
+        }
+        
+        return times;
     }
 };
 
