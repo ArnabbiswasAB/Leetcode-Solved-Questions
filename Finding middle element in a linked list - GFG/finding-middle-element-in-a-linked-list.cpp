@@ -45,7 +45,7 @@ class Solution{
         
         Node* fast = head, *slow = head;
         
-        while(fast){
+     /*   while(fast){
             
             fast = fast->next;
             
@@ -53,6 +53,12 @@ class Solution{
                 slow = slow->next;
                 fast = fast->next;
             }
+        }
+        */
+        
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
         }
         
         return slow->data;
