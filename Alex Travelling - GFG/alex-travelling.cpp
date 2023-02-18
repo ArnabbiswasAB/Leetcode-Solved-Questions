@@ -30,7 +30,7 @@ class Solution {
             
             for(auto it : adj[node]){
                 
-                if(dist[node] + it.second < dist[it.first]){
+                if(ist[node] + it.second < dist[it.first]){
                     dist[it.first] = it.second + dist[node];
                     pq.push({dist[it.first], it.first});
                 }
