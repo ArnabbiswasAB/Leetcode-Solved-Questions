@@ -17,8 +17,8 @@ class Solution
         
         for(int i=0; i<=n; i++){
             
-            while(!st.empty() && (i == n || arr[st.top()] >= arr[i]))
-            {
+            while(!st.empty() && (i == n || arr[st.top()] >= arr[i])){
+                
                 long long height = arr[st.top()];
                 st.pop();
                 
@@ -26,8 +26,9 @@ class Solution
                 
                 if(st.empty())
                 width = i;
-                else
-                width = i - st.top() - 1;
+                else{
+                    width = i - st.top() - 1;
+                }
                 
                 area = max(area, height * width);
             }
@@ -35,8 +36,8 @@ class Solution
             st.push(i);
         }
         
-        
         return area;
+        
     }
 };
 
