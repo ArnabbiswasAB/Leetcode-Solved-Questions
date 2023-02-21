@@ -31,35 +31,32 @@ class Solution
             }
         }
         
-        while(!q.empty()){
-            
-            int k = q.size();
-            total += k;
-            while(k -- ){
-                
-                auto it = q.front();
-                q.pop();
-                
-                for(int i=0; i<4; i++){
-                    int x = dx[i] + it.first;
-                    int y = dy[i] + it.second;
-                    
-                    if(x>=0 && y>=0 && x<m && y<n && grid[x][y] == 1){
-                        q.push({x,y});
-                        grid[x][y] = 2;
-                    }
-                }
-            }
-            
-            if(!q.empty())
-            times++;
-        }
+       while(!q.empty()){
+           
+          
+           int k = q.size();
+        total += k;
         
-        
-        if(total == count)
-        return times;
-        
-        return -1;
+           while(k--){
+               auto it = q.front();
+               q.pop();
+               grid[it.first][it.second] = 2;
+               
+               for(int i=0; i<4; i++){
+                   int x = it.first + dx[i];
+                   int y = it.second + dy[i];
+                   
+                   if(x>=0 && y>=0 && x<m && y<n && grid[x][y] == 1){
+                       q.push({x,y});
+                       grid[x][y] = 2;
+                   }
+               }
+           }
+           if(!q.empty())
+           times++;
+       }
+       
+       return count == total ? times : -1;
     }
 };
 
