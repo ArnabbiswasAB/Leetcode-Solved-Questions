@@ -8,61 +8,47 @@ class Solution {
     vector<int> shortestPath(int n, int m, vector<vector<int>>& edges) {
         // Code here
         
-        vector<pair<int,int>>adj[n+1];
+         vector<pair<int,int>>adj[n+1];
         
-        for(auto it : edges){
-            int u = it[0];
-            int v = it[1];
-            int wt = it[2];
-            
-            adj[u].push_back({v,wt});
-            adj[v].push_back({u,wt});
+        for(int i=0; i<edges.size(); i++){
+            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
+            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
         }
         
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-        pq.push({0,1});
         vector<int>dist(n+1,1e9);
         dist[1] = 0;
+        queue<pair<int,int>>q;
+        q.push({0,1});
         
-        vector<int>parent(n+1,0);
-        for(int i=0; i<n+1; i++){
-            parent[i] = i;
-        }
+        vector<int>ans, curr(n+1,-1);
         
-        while(!pq.empty()){
-            int u = pq.top().second;
-            int wt = pq.top().first;
-            pq.pop();
+        while(!q.empty()){
             
-            for(auto it : adj[u]){
-                int v = it.first;
-                int edgeWt = it.second;
-                
-                if(wt + edgeWt < dist[v]){
-                    dist[v] = wt + edgeWt;
-                    pq.push({dist[v], v});
-                    
-                    parent[v] = u;
+            int node = q.front().second;
+            int wt = q.front().first;
+            q.pop();
+            
+            for(auto it : adj[node]){
+                if(wt + it.second < dist[it.first]){
+                    curr[it.first] = node;
+                    dist[it.first] = wt + it.second;
+                    q.push({dist[it.first], it.first});
                 }
             }
         }
         
+        
         if(dist[n] == 1e9)
         return {-1};
         
-        int node = n;
-        vector<int>path;
+      while(n != -1){
+          ans.push_back(n);
+          n = curr[n];
+      }
         
-        while(parent[node] != node){
-            path.push_back(node);
-            node = parent[node];
-        }
+        reverse(ans.begin(),ans.end());
+        return ans;
         
-        path.push_back(1);
-        reverse(path.begin(),path.end());
-        
-        
-        return path;
     }
 };
 
