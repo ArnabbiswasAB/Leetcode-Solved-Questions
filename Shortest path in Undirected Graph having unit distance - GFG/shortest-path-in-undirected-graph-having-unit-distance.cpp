@@ -13,38 +13,37 @@ class Solution {
         
         vector<int>adj[N];
         
-        for(auto it : edges){
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back(it[0]);
+        for(int i=0; i<edges.size(); i++){
+            adj[edges[i][0]].push_back(edges[i][1]);
+            adj[edges[i][1]].push_back(edges[i][0]);
         }
         
         vector<int>dist(N,1e9);
-        vector<int>ans(N,-1);
-        
-        queue<int>q;
-        q.push(src);
         dist[src] = 0;
-       
+        queue<pair<int,int>>q;
+        q.push({0,src});
+        
         while(!q.empty()){
-            int node = q.front();
+            
+            int node = q.front().second;
+            int wt = q.front().first;
             q.pop();
             
             for(auto it : adj[node]){
-                if(dist[node] + 1 < dist[it]){
-                    dist[it] = 1 + dist[node];
-                    q.push(it);
+                if(wt + 1 < dist[it]){
+                    dist[it] = wt + 1;
+                    q.push({dist[it], it});
                 }
-            }
-        } 
-        
-        
-        for(int i=0; i<N; i++){
-            if(dist[i] != 1e9){
-                ans[i] = dist[i];
             }
         }
         
-        return ans;
+        
+        for(int i=0; i<N; i++){
+            if(dist[i] == 1e9)
+            dist[i] = -1;
+        }
+        
+        return dist;
     }
 };
 
