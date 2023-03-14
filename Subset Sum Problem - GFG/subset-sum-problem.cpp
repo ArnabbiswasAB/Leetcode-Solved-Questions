@@ -9,32 +9,34 @@ using namespace std;
 
 class Solution{   
 public:
-    bool f(int i,vector<int>& arr, int sum, vector<vector<int>>& dp){
-      
-      if(sum == 0)
-      return true;
-      
-      if(i == arr.size())
-      return false;
-      
-      if(dp[i][sum] != -1)
-      return dp[i][sum];
-      
-      bool notTaken = f(i+1,arr,sum,dp);
-      bool taken = false;
-      
-      if(arr[i] <= sum)
-        taken = f(i+1,arr,sum - arr[i], dp);
+    bool helper(int i, vector<int>& arr, int sum, vector<vector<int>> &dp){
         
-      return dp[i][sum] = notTaken || taken;    
+        if(sum == 0)
+        return true;
+        
+        if(i == 0){
+           return arr[0] == sum;
+        }
+        
+        if(dp[i][sum] != -1)
+        return dp[i][sum];
+        
+        bool notTaken = helper(i-1,arr,sum, dp);
+        bool taken = false;
+        
+        if(arr[i] <= sum)
+        taken = helper(i-1,arr, sum - arr[i], dp);
+        
+        
+        return dp[i][sum] = notTaken || taken;
     }
     
     
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         int n = arr.size();
-        vector<vector<int>>dp (n, vector<int>(sum+1,-1));
-        return f(0,arr,sum,dp);
+        vector<vector<int>> dp(n, vector<int>(sum+1,-1));
+        return helper(n-1,arr,sum,dp);
     }
 };
 
