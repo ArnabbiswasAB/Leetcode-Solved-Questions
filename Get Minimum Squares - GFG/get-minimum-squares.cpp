@@ -38,8 +38,34 @@ class Solution{
 	{
 	    // Code here
 	    
-	    vector<vector<int>> dp(sqrt(n)+1, vector<int>(n+1,-1));
-	    return helper(n,1,dp);
+	    vector<int>arr;
+	    
+	    for(int i=1; i*i<=n; i++){
+	        arr.push_back(i*i);
+	    }
+	    
+	    int m = arr.size();
+	    vector<vector<int>> dp(m+1, vector<int>(n+1,0));
+	  
+	    for(int i=1; i<n+1; i++){
+	        dp[m][i] = 1e9;
+	    }
+	      
+	      
+	    for(int i=m-1; i>=0; i--){
+	        for(int j=0; j<n+1; j++){
+	            
+	            int notPick = dp[i+1][j];
+	            int pick = 1e9;
+	            
+	            if(arr[i] <= j)
+	              pick = 1 + dp[i][j-arr[i]];
+	            
+	            dp[i][j] = min(pick,notPick);  
+	        }
+	    }  
+	    
+	    return dp[0][n];
 	}
 };
 
