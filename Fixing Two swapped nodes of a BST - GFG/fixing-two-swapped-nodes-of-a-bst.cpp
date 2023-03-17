@@ -110,7 +110,7 @@ class Solution {
         
         inOrder(root->left);
         
-        if(prev != NULL && prev->data > root->data){
+        if(prev != NULL && prev->data >= root->data){
             
             if(first == NULL){
                 first = prev;
