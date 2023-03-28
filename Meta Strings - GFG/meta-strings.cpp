@@ -42,7 +42,6 @@ bool metaStrings (string s1, string s2)
        }
    }
    
-   if(i != n)
    swap(s1[i],s1[first]);
    
    return s1 == s2;
