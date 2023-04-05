@@ -9,45 +9,42 @@ class Solution
     public:
     //Function to find the smallest window in the string s consisting
     //of all the characters of string p.
-    string smallestWindow (string s, string t)
+    string smallestWindow (string s, string p)
     {
         // Your code here
+        
+        int counter = p.size();
+        int start=0, end=0, minStart=0, n=s.length(), len = INT_MAX;
         unordered_map<char,int>mp;
-        int minlen=INT_MAX, end=0, start=0, size = s.size(),minstart=0;
         
-        for(int i=0; i<t.size(); i++)
-        mp[t[i]]++;
-        
-        int counter=t.size();
-        
-        while(end<size){
+        for(int i=0; i<p.length(); i++)
+          mp[p[i]]++;
+          
+        while(end<n){
             
-            if(mp[s[end]] > 0)
-               counter--;
-               
-            mp[s[end]]--;
-            end++;
-            
-            while(counter == 0){
-                
-                if(end - start < minlen){
-                    minstart=start;
-                    minlen = end - start;
-                }
-                
-                mp[s[start]]++;
-                
-                if(mp[s[start]] > 0)
-                counter++;
-                
-                start++;
-            }
+          if(mp[s[end]] > 0)
+          counter--;
+          
+          mp[s[end]]--;
+          end++;
+          
+          while(counter == 0){
+              
+              if(end - start < len){
+                  len = end - start;
+                  minStart = start;
+              }
+              
+              mp[s[start]]++;
+              if(mp[s[start]] > 0)
+              counter++;
+              
+              start++;
+          }
         }
         
-        if(minlen != INT_MAX)
-        return s.substr(minstart, minlen);
         
-        return "-1";
+        return len == INT_MAX ? "-1" : s.substr(minStart,len);
     }
 };
 
