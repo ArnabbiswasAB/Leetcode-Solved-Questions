@@ -7,37 +7,45 @@ using namespace std;
 
 class Solution {
   public:
-  
-   vector<vector<string>> ans;
-      bool isPalindrome(string s, int start, int end) {
-    while (start <= end) {
-      if (s[start++] != s[end--])
-        return false;
-    }
-    return true;
+  vector<vector<string>> ans;
+  bool palin(string s, int i, int j){
+      
+      while(i<=j){
+          if(s[i] != s[j])
+          return false;
+          
+          i++;
+          j--;
+      }
+      
+      return true;
   }
   
-    void helper(string s, int ind, vector<string> &temp){
-        
-        if(s.length() == ind){
-            ans.push_back(temp);
-            return;
-        }
-        
-        for(int i=ind; i<s.length(); i++){
-            
-            if(isPalindrome(s, ind , i)){
-                temp.push_back(s.substr(ind, i - ind + 1));
-                helper(s, i+1, temp);
-                temp.pop_back();
-            }
-        }
-    }
-    
-    
+  
+  void helper(string s,int ind, vector<string> temp){
+      
+      if(ind == s.length()){
+          ans.push_back(temp);
+          return;
+      }
+      
+      for(int i=ind; i<s.length(); i++){
+          
+          if(palin(s,ind,i)){
+              temp.push_back(s.substr(ind,i-ind+1));
+              helper(s,i+1,temp);
+              temp.pop_back();
+          }
+      }
+      
+      return;
+  }
+  
+  
     vector<vector<string>> allPalindromicPerms(string S) {
         // code here
-         vector<string>temp;
+        
+        vector<string>temp;
         helper(S,0,temp);
         return ans;
     }
