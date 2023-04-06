@@ -11,52 +11,45 @@ using namespace std;
 class Solution
 {
   public:
-  
-  bool check(int arr[], int n,int k,long long mid){
-   
-     int count = 0;
-     long long sum = 0;
-     
-     for(int i=0; i<n; i++){
-         
-         if(arr[i] > mid)
-         return false;
-         
-         if(arr[i] + sum > mid){
+  bool check(int arr[], int n, int k, long long mid){
+      
+      long long sum = 0;
+      long long count = 0;
+      
+      for(int i=0; i<n; i++){
+      
+            if(arr[i] > mid)
+          return false;
+          
+           if(arr[i] + sum > mid){
              count++;
              sum = arr[i];
          }else{
              sum += arr[i];
          }
-     }
-     
-     if(count<k)
+      }
+      
+      if(count<k)
      return true;
      
      return false;
   }
   
-  
     long long minTime(int arr[], int n, int k)
     {
         // code here
         // return minimum time
-        long long low = arr[0] , high = 0, ans = 0;
-        for(int i=0; i<n; i++){
-            high += arr[i];
-        }
         
+        long long low = 0, high = 1e6, ans = 0;
         
         while(low <= high){
-            
             long long mid = low + (high - low)/2;
             
-            if(check(arr,n,k,mid)){
+            if(check(arr,n, k, mid)){
                 ans = mid;
                 high = mid - 1;
-            }
-            else{
-            low = mid + 1;
+            }else{
+                low = mid + 1;
             }
         }
         
