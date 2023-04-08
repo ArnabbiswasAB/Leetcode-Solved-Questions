@@ -77,7 +77,7 @@ class Solution{
                      q.push({0,x+y});
                      visited[0][x+y]=1;
                  }
-                 else if(n-y<=x && !visited[x-(n-y)][n]) // Transfer some water from jug 1 to jug 2 with some left in jug 1
+                 else if(x+y>=n && !visited[x-(n-y)][n]) // Transfer some water from jug 1 to jug 2 with some left in jug 1
                  {
                      q.push({x-(n-y),n});
                      visited[x-(n-y)][n]=1;
