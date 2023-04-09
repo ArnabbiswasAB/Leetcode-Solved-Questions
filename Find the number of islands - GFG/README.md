@@ -28,7 +28,7 @@ All lands are connected.</span>
 <strong>Expanation:
 </strong>The grid is-
 0 <span style="color:#000080">1 1 1</span> 0 0 0
-0 0 <span style="color:#000080">1 1</span> 0 <span style="color:#FF0000">1</span> 0&nbsp;
+0 0 <span style="color:#000080">1 1</span> 0 <span style="color:#ff0000">1</span> 0&nbsp;
 There are two islands :- one is colored in blue 
 and other in orange.</span>
 </pre>
