@@ -11,33 +11,29 @@ class Solution
     long long getMaxArea(long long arr[], int n)
     {
         // Your code here
-        
-        long long area = 0;
         stack<long long>st;
+        long long ans = 0;
         
         for(int i=0; i<=n; i++){
             
-            while(!st.empty() && (i == n || arr[st.top()] >= arr[i])){
+            while(!st.empty() && (i==n || arr[st.top()] >= arr[i])){
                 
-                long long height = arr[st.top()];
+                int height = arr[st.top()];
                 st.pop();
                 
-                long long width = 0;
-                
+                long long width;
                 if(st.empty())
                 width = i;
-                else{
-                    width = i - st.top() - 1;
-                }
+                else
+                width = i - st.top() - 1;
                 
-                area = max(area, height * width);
+                ans = max(ans, height * width);
             }
             
             st.push(i);
         }
         
-        return area;
-        
+        return ans;
     }
 };
 
