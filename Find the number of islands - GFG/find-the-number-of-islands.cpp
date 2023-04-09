@@ -6,6 +6,24 @@ using namespace std;
 class Solution {
   public:
     // Function to find the number of islands.
+    void dfs(vector<vector<char>>& grid, int i,int j,int m, int n){
+        
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j] == '0')
+        return;
+        
+        grid[i][j] = '0';
+        
+        dfs(grid, i+1, j, m, n);
+        dfs(grid, i-1, j, m, n);
+        dfs(grid, i, j+1, m, n);
+        dfs(grid, i, j-1, m, n);
+         dfs(grid, i+1, j+1, m, n);
+          dfs(grid, i+1, j-1, m, n);
+           dfs(grid, i-1, j+1, m, n);
+            dfs(grid, i-1, j-1, m, n);
+    }
+    
+    
     int numIslands(vector<vector<char>>& grid) {
         // Code here
         
@@ -21,26 +39,8 @@ class Solution {
                 continue;
                 
                 
-                q.push({i,j});
                 islands++;
-                
-                while(!q.empty()){
-                    
-                    int row = q.front().first;
-                    int col = q.front().second;
-                    grid[row][col] = '0';
-                    q.pop();
-                    
-                    for(int ind=0; ind<8; ind++){
-                        int x = row + dx[ind];
-                        int y = col + dy[ind];
-                        
-                        if(x>=0 && y>=0 && x<m && y<n && grid[x][y] == '1'){
-                            grid[x][y] = '0';
-                            q.push({x,y});
-                        }
-                    }
-                }
+                dfs(grid, i,j, m,n);
             }
         }
         
