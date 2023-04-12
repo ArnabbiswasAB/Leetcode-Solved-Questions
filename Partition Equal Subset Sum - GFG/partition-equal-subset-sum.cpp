@@ -9,40 +9,39 @@ using namespace std;
 
 class Solution{
 public:
+    bool helper(int arr[],int ind,int sum, vector<vector<int>> &dp){
+        
+        if(sum == 0)
+        return true;
+        
+        if(ind == 0)
+        return arr[0] == sum;
+        
+        if(dp[ind][sum] != -1)
+        return dp[ind][sum];
+        
+        int notTake = helper(arr, ind-1, sum, dp);
+        int take = 0;
+        
+        if(arr[ind] <= sum)
+           take = helper(arr, ind-1, sum - arr[ind], dp);
+           
+        return dp[ind][sum] = notTake || take;   
+    }
+    
+    
     int equalPartition(int N, int arr[])
     {
-        // code here
+        
         int sum = 0;
-        for(int i=0; i<N; i++){
-            sum += arr[i];
-        }
+        for(int i=0; i<N; i++)
+        sum += arr[i];
         
         if(sum % 2 != 0)
-        return 0;
+        return false;
         
-        int target = sum/2;
-        vector<vector<bool>>dp(N,vector<bool>(sum/2 + 1, false));
-        
-        for(int i=0; i<N; i++)
-          dp[i][0] = true;
-          
-        if(arr[0]<= target)
-          dp[0][arr[0]] = true;
-          
-        for(int i=1; i<N; i++){
-            for(int j=1; j<=target; j++){
-                
-                bool notTaken = dp[i-1][j];
-                bool Taken = false;
-                
-                if(arr[i]<=j)
-                 Taken = dp[i-1][j - arr[i]];
-                 
-                 dp[i][j] = notTaken||Taken;
-            }
-        }
-        
-        return dp[N-1][target];
+        vector<vector<int>> dp(N, vector<int>(sum/2 + 1, -1));
+        return helper(arr, N-1, sum/2, dp);
     }
 };
 
