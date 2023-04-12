@@ -1,9 +1,9 @@
 # Minimum cost to fill given weight in a bag
 ## Medium
-<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given an array <strong>cost[]</strong> of positive integers of size <strong>N</strong> and an integer <strong>W</strong>, cost[i] represents the cost of <strong>‘i’</strong> kg packet of oranges, the task is to find the minimum cost to buy <strong>W</strong> kgs of oranges.</span> <span style="font-size:18px">If it is not possible to buy exactly <strong>W</strong> kg oranges then the output will be -1</span></p>
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given an array <strong>cost[]</strong> of positive integers of size <strong>N</strong> and an integer <strong>W</strong>, cost[i] represents the cost of <strong>i</strong> kg packet of oranges, the task is to find the minimum cost to buy <strong>W</strong> kgs of oranges.</span> <span style="font-size:18px">If it is not possible to buy exactly <strong>W</strong> kg oranges then the output will be -1</span></p>
 
 <p><span style="font-size:18px"><strong>Note:</strong><br>
-1. cost[i] = -1 means that ‘i’ kg packet of orange is unavailable<br>
+1. cost[i] = -1 means that i kg packet of orange is unavailable<br>
 2. </span> <span style="font-size:18px">It may be assumed that there is infinite supply of all available packet types.</span></p>
 
 <p><span style="font-size:18px"><strong>Example 1:</strong></span></p>
