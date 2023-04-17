@@ -30,7 +30,7 @@ You don't need to read input or print anything. Your task is to complete the fun
 
 <p><br>
 <span style="font-size:18px"><strong>Expected Time Complexity:</strong> O(N*logN)<br>
-<strong>Expected Auxiliary Space:</strong> O(1)</span></p>
+<strong>Expected Auxiliary Space:</strong> O(logN)</span></p>
 
 <p><br>
 <span style="font-size:18px"><strong>Constraints:</strong><br>
