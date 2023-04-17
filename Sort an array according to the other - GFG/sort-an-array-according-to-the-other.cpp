@@ -20,28 +20,27 @@ class Solution{
     vector<int> sortA1ByA2(vector<int> A1, int N, vector<int> A2, int M) 
     {
         //Your code here
-        vector<int>ans;
+        
         map<int,int>mp;
         for(int i=0; i<N; i++){
             mp[A1[i]]++;
         }
         
+        vector<int>ans;
         for(int i=0; i<M; i++){
-            int curr = A2[i];
-            int count = mp[curr];
-            for(int i=0; i<count; i++){
-                ans.push_back(curr);
-            }
-            mp.erase(curr);
+            
+            int count = mp[A2[i]];
+            while(count--)
+               ans.push_back(A2[i]);
+               
+            mp.erase(A2[i]);   
         }
         
         for(auto it : mp){
-            int curr = it.first;
             int count = it.second;
-            for(int i=0; i<count; i++){
-                ans.push_back(curr);
-            }
-            mp.erase(curr);
+        while(count--){
+            ans.push_back(it.first);
+        }
         }
         
         return ans;
