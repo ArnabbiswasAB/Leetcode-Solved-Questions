@@ -9,21 +9,20 @@ class Solution
 {
     public:
     //Function to search a given number in row-column sorted matrix.
-    bool search(vector<vector<int> > mat, int n, int m, int x) 
+    bool search(vector<vector<int> > matrix, int n, int m, int x) 
     {
-        // code here 
         
-        int i = 0, j = m - 1;
+        int i = 0, j = m-1;
         
         while(i<n && j>=0){
             
-            if(mat[i][j] == x)
+            if(matrix[i][j] == x)
             return true;
             
-            if(mat[i][j] < x)
-            i++;
+            if(matrix[i][j] > x)
+              j--;
             else
-            j--;
+              i++;
         }
         
         return false;
