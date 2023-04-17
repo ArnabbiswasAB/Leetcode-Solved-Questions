@@ -4,6 +4,7 @@ using namespace std;
 
 // } Driver Code Ends
 
+
 class Solution
 {
     public:
@@ -11,6 +12,7 @@ class Solution
         {
         //complete the function here
         int low = 0;
+           // ans between 1 and n*5 becoz 1 <= n <= 10^4
             int high = n*5;
             int ans = high;
             while(low <= high){
@@ -33,6 +35,8 @@ class Solution
        
         }
 };
+
+
 
 //{ Driver Code Starts.
 
