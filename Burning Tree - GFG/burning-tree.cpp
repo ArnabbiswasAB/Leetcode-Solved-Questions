@@ -82,74 +82,82 @@ Node *buildTree(string str) {
 // } Driver Code Ends
 //User function Template for C++
 
+
 class Solution {
   public:
-  
-  void markParent(Node* root, Node* &node, int target, unordered_map<Node*,Node*>& mp){
-      
-       queue<Node*>q;
-       q.push(root);
-       
-       while(!q.empty()){
-           
-           Node* temp = q.front();
-           q.pop();
-           
-           if(temp->data == target)
-           node = temp;
-           
-           if(temp->left){
-               q.push(temp->left);
-               mp[temp->left] = temp;
-           }
-           
-           if(temp->right){
-               q.push(temp->right);
-               mp[temp->right] = temp;
-           }
-       }
-  }
-  
-  
+     void mapping(Node* root,int t,Node* &save,unordered_map<Node*,Node*> &mp){
+         
+         if(!root)
+         return;
+         
+         queue<Node*>q;
+         q.push(root);
+         mp[root] = NULL;
+         
+         while(!q.empty()){
+             
+             Node* node = q.front();
+             q.pop();
+             
+             if(node->data == t)
+                save = node;
+             
+             
+             if(node->left){
+                 q.push(node->left);
+                 mp[node->left] = node;
+             }
+             
+             if(node->right){
+                 q.push(node->right);
+                 mp[node->right] = node;
+             }
+         }
+         
+         return;
+     }
+     
+     
     int minTime(Node* root, int target) 
     {
-        // Your code goes here
-        unordered_map<Node*,Node*>mp;
-        unordered_map<Node*, bool>vis;
-        Node* node = NULL;
+        if(!root)
+        return 0;
         
-        markParent(root,node,target,mp);
+        unordered_map<Node*,Node*>mp;
+        Node* save = NULL;
+        mapping(root, target, save, mp);
+        unordered_map<Node*, bool>vis;
+        vector<int>ans;
         queue<Node*>q;
-        q.push(node);
         int times = 0;
-        vis[node] = true;
+        q.push(save);
+        vis[save] = 1;
         
         while(!q.empty()){
             
-            int n = q.size();
+            int k = q.size();
             
-            
-            for(int i=0; i<n; i++){
-                Node* temp = q.front();
+            for(int i=0; i<k; i++){
+                
+                Node* node = q.front();
                 q.pop();
                 
-                
-                if(temp->left && !vis[temp->left]){
-                    q.push(temp->left);
-                    vis[temp->left] = true;
+                if(node->left && !vis[node->left]){
+                    q.push(node->left);
+                    vis[node->left] = true;
                 }
                 
-                if(temp->right && !vis[temp->right])
-                {
-                    q.push(temp->right);
-                    vis[temp->right] = true;
+                if(node->right && !vis[node->right]){
+                    q.push(node->right);
+                    vis[node->right] = true;
                 }
                 
-                if(mp[temp] && !vis[mp[temp]]){
-                    q.push(mp[temp]);
-                    vis[mp[temp]] = true;
+                if(mp[node] && !vis[mp[node]]){
+                    q.push(mp[node]);
+                    vis[mp[node]] = 1;
                 }
             }
+            
             if(!q.empty())
             times++;
         }
