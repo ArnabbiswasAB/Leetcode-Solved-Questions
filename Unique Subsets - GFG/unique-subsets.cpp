@@ -14,14 +14,15 @@ class Solution
         
         ans.push_back(temp);
         
-        for(int i = ind; i<arr.size(); i++){
+        for(int i=ind; i<n; i++){
             
             if(i>ind && arr[i] == arr[i-1])
-            continue;
-            
+              continue;
+              
             temp.push_back(arr[i]);
             helper(arr, i+1, n, temp);
             temp.pop_back();
+            
         }
     } 
     
