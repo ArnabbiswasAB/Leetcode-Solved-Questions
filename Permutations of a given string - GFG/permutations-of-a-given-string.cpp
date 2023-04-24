@@ -6,11 +6,11 @@ using namespace std;
 class Solution
 {
 	public:
-	  set<string>st;
-	  
-	    void findWays(string s,vector<int>&vis, vector<string> &ans,string temp, int n){
+	set<string>st;
+	
+	    void helper(string s,int n,vector<int>& curr,string temp,vector<string>& ans){
 	        
-	        if(temp.size() == s.size()){
+	       if(temp.size() == s.size()){
 	            
 	            if(st.find(temp) == st.end())
 	            ans.push_back(temp);
@@ -22,27 +22,24 @@ class Solution
 	        
 	        for(int i=0; i<n; i++){
 	            
-	           
-	            
-	            if(vis[i] == -1){
-	                vis[i] = 1;
-	                temp += s[i];
-	                findWays(s, vis, ans, temp, n);
+	            if(curr[i] == -1){
+	                temp.push_back(s[i]);
+	                curr[i] = 1;
+	                helper(s,n, curr, temp, ans);
 	                temp.pop_back();
-	                vis[i] = -1;
+	                curr[i] = -1;
 	            }
 	        }
 	    }
 	    
-		vector<string>find_permutation(string S)
+		vector<string>find_permutation(string s)
 		{
 		    // Code here there
+		    int n = s.length();
+		    vector<int> curr(n,-1);
 		    vector<string>ans;
-		    int n = S.size();
 		    
-		    vector<int>vis(n,-1);
-		    string temp = "";
-		    findWays(S,vis,ans,temp,n);
+		    helper(s,n,curr,"",ans);
 		    sort(ans.begin(),ans.end());
 		    return ans;
 		}
