@@ -12,22 +12,21 @@ class Solution
     int longestSubsequence(int n, int a[])
     {
        // your code here
-      vector<int>temp;
-      temp.push_back(a[0]);
-      
-      for(int i=1; i<n; i++){
-          
-          if(a[i] > temp.back())
-          temp.push_back(a[i]);
-          else{
-              
-      int ind = lower_bound(temp.begin(),temp.end(), a[i]) - temp.begin();
-
-         temp[ind] = a[i];      
-          }
-      }
-      
-      return temp.size();
+       
+       vector<int>ans;
+       ans.push_back(a[0]);
+       
+       for(int i=1; i<n; i++){
+           
+           if(ans.back() < a[i])
+             ans.push_back(a[i]);
+           else{
+                int index = lower_bound(ans.begin(), ans.end(), a[i]) - ans.begin();
+                ans[index] = a[i];
+             }
+       }
+       
+       return ans.size();
     }
 };
 
