@@ -14,28 +14,25 @@ class Solution{
 	int lps(string s) {
 	    // Your code goes here
 	    
-	    int n = s.size();
-	    vector<int>kmp(n,0);
-	    
-	    int i=1, j=0;
-	    
-	    while(i<n){
-	        
-	        if(s[i] == s[j]){
-	            j++;
-	            kmp[i] = j;
-	            i++;
-	        }
-	        else{
-	            if(j>0)
-	            {
-	                j = kmp[j-1];
-	            }else{
-	                kmp[i] = 0;
-	                i++;
-	            }
-	        }
-	    }
+	    int n = s.length();
+	    int kmp[n] = {0};
+        int j=0, i=1;
+        
+        while(i<n){
+            
+            if(s[i] == s[j]){
+                kmp[i] = j+1;
+                j++;
+                i++;
+            }else{
+                if(j == 0){
+                    kmp[i] = 0;
+                    i++;
+                }else{
+                    j = kmp[j-1];
+                }
+            }
+        }
 	    
 	    return kmp[n-1];
 	}
