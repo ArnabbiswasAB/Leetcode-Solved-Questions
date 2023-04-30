@@ -19,15 +19,8 @@ struct Node {
 
 
 // } Driver Code Ends
-/* Linked List Node structure:
 
-struct Node
-{
-    int data;
-    struct Node *next;
-}
 
-*/
 
 class Solution
 {
@@ -35,22 +28,16 @@ class Solution
     //Function to reverse a linked list.
     struct Node* reverseList(struct Node *head)
     {
-        // code here
-        // return head of reversed list
         
-        Node* prev = NULL, *curr = head, *next = NULL;
+        if(!head || !head->next)
+        return head;
         
-        while(curr){
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
-            
-        }    
+        Node* new_head = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
         
-        return prev;
+        return new_head;
     }
-    
 };
     
 
