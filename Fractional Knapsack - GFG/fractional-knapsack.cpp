@@ -54,7 +54,7 @@ class Solution
             int weight = arr[i].weight;
             int profit = arr[i].value;
             
-            if(arr[i].weight < remain){
+            if(arr[i].weight <= remain){
                 curweight += weight;
                 result += profit;
             }else{
