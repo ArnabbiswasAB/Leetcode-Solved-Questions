@@ -18,8 +18,7 @@ class Solution{
     // Traverse the array arr[]
     for (int i = 0; i < N; i++) {
         if (arr[i] > -1) {
-            V.push_back(
-                pair<int, int>(i - arr[i], i + arr[i]));
+           V.push_back(pair<int, int>(i - arr[i], i + arr[i]));
         }
     }
     // Sort the array sprinklers in
@@ -71,7 +70,7 @@ class Solution{
         res++;
  
         // Update maxRight
-        maxRight = currMax + 1;
+        maxRight = currMax+1;
  
         // Increment i by 1
         i++;
