@@ -10,9 +10,11 @@ using namespace std;
 // } Driver Code Ends
 // User function Template for C++
 
+// the max-heap property: the value of each node is less than or equal 
+// to the value of its parent, with the maximum-value element at the root.
+
 class Solution{
     public:
-    
     void heapify(vector<int>&arr, int i , int n){
         
         int largest = i ;
@@ -51,9 +53,6 @@ class Solution{
         
         return ans;
     }
-    
-    
-    
 };
 
 //{ Driver Code Starts.
