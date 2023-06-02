@@ -8,41 +8,41 @@ using namespace std;
 class Solution{
 public:
 	vector<int> findSubarray(int a[], int n) {
-	    // code here
 	    
-	    pair<int, int> last;
-	    int sum = 0;
-	    int start = 0;
-	    int max_ans = 0;
-	    for(int i = 0; i < n; i++)
-	    {
-	        if(a[i] < 0)
-	        {
+	    
+	    // application of modified kadane's algorithm
+	    
+	    int start = 0, s = 0, end = 0, sum = 0, maxSum = 0;
+	    
+	    for(int i=0; i<n; i++){
+	        
+	        sum += a[i];
+	        
+	        if(sum < 0 || a[i] < 0){
 	            sum = 0;
 	            start = i+1;
-	            continue;
 	        }
-	        sum += a[i];
-	        if(sum > max_ans)
-	        {
-	            max_ans = sum;
-	            last = {start, i};
-	        }
-	        else if(sum == max_ans)
-	        {
-	            if((i - start) > (last.second - last.first))
-	            {
-	                last = {start, i};
+	        
+	        if(sum > maxSum){
+	            maxSum = sum;
+	            s = start;
+	            end = i;
+	        }else if(sum == maxSum){
+	        
+	            if(i - start + 1 > end - s + 1){
+	                s = start;
+	                end = i;
 	            }
 	        }
 	    }
 	    
-	    vector<int> ans;
-	    for(int i = last.first; i <= last.second; i++)
-	    {
+	    vector<int>ans;
+	    
+	    for(int i=s; i<=end; i++){
 	        ans.push_back(a[i]);
 	    }
-        return ans;
+	    
+	    return ans;
 	}
 };
 
