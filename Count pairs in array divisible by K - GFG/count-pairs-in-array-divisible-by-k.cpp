@@ -19,11 +19,15 @@ class Solution
        long long count=0;
        for(int i=0;i<n;i++){
            int val=A[i]%K;
+           
            if(mapi.find(K-val)!=mapi.end()){
                count+=mapi[K-val];
            }
-           if(val==0)val=K;
-             mapi[val]++;
+           
+           if(val==0)
+           val=K;
+           
+           mapi[val]++;
        }
        return count;
     }
