@@ -7,16 +7,23 @@ class Solution{
 	public:
 	int NthRoot(int n, int m)
 	{
-	    // Code here.
-	      int low=0;
-	    int high=m;
-	    while(low<=high){
-	        int mid=(low+high)/2;
-	        double val=pow(mid,n);
-	        if(val==m) return mid;
-	        else if(val<m) low=mid+1;
-	        else high=mid-1;
+	    
+	    int low = 0, high = m;
+	    
+	    while(low <= high){
+	        
+	        int mid = low + (high - low)/2;
+	        
+	        double val = pow(mid, n);
+	        if(val == m)
+	        return mid;
+	        
+	        if(val < m)
+	          low = mid + 1;
+	        else
+	          high = mid - 1;
 	    }
+	    
 	    return -1;
 	}  
 };
