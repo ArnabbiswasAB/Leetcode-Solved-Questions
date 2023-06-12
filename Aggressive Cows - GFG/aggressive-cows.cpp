@@ -9,7 +9,7 @@ using namespace std;
 
 class Solution {
 public:
-     bool check(vector<int>& stalls, int k, int mid){
+    bool check(vector<int> stalls, int k, int mid){
         
         int cnt = 1;
         int last = stalls[0];
@@ -22,29 +22,26 @@ public:
             }
         }
         
-        if(cnt >= k)
-        return true;
-        
-        return false;
+        return (cnt >= k);
+       
     }
     
     
     int solve(int n, int k, vector<int> &stalls) {
     
-        // Write your code here
         sort(stalls.begin(),stalls.end());
-        int low = 1, high = stalls[n-1] - stalls[0];
-        int ans = 0;
+        
+        int low = 1, high = stalls[n-1] - stalls[0], ans = 0;
         
         while(low <= high){
             
             int mid = low + (high - low)/2;
             
             if(check(stalls,k,mid)){
-             ans = mid;
-             low = mid + 1;
+                ans = mid;
+                low = mid + 1;
             }else{
-             high = mid - 1;
+                high = mid - 1;
             }
         }
         
