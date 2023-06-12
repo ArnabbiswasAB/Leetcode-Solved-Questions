@@ -9,8 +9,7 @@ using namespace std;
 
 class Solution {
 public:
-    
-    bool check(vector<int>& stalls, int k, int mid){
+     bool check(vector<int>& stalls, int k, int mid){
         
         int cnt = 1;
         int last = stalls[0];
