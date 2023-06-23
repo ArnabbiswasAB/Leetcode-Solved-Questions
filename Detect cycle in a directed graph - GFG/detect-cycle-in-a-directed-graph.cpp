@@ -9,36 +9,40 @@ class Solution {
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
         
-        vector<int>inDegree(V,0);
+        vector<int>inOrder(V,0);
         queue<int>q;
+        int count = 0;
         
         for(int i=0; i<V; i++){
             for(auto it : adj[i]){
-                inDegree[it]++;
+                inOrder[it]++;
             }
         }
         
         for(int i=0; i<V; i++){
-            if(inDegree[i] == 0)
-              q.push(i);
+            if(inOrder[i] == 0)
+            q.push(i);
         }
         
-        int total = 0;
         while(!q.empty()){
+            
             int node = q.front();
             q.pop();
-            total++;
+            
+            count++;
             
             for(auto it : adj[node]){
-                if(--inDegree[it] == 0)
+                inOrder[it]--;
+                
+                if(inOrder[it] == 0)
                 q.push(it);
             }
         }
         
-         if(total == V) 
-         return false;
-         
-         return true;
+        if(count == V)
+        return false;
+        
+        return true;
     }
 };
 
