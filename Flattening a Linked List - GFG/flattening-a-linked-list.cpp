@@ -1,34 +1,5 @@
 //{ Driver Code Starts
-//Initial Template for C++
-
 #include <bits/stdc++.h>
-using namespace std;
-
-struct Node {
-    int data;
-    struct Node * next;
-    struct Node * bottom;
-
-    Node(int x) {
-        data = x;
-        next = NULL;
-        bottom = NULL;
-    }
-
-};
-
-void printList(Node *Node)
-{
-    while (Node != NULL)
-    {
-        printf("%d ", Node->data);
-        Node = Node->bottom;
-    }
-}
-
-
-// } Driver Code Ends
-/* Node structure  used in the program
 
 struct Node{
 	int data;
@@ -42,109 +13,116 @@ struct Node{
 	}
 	
 };
-*/
 
-class Solution {
-public:
-    Node* merge(Node* a, Node* b){
-        
-        if(!a)
-        return b;
-        else if(!b)
-        return a;
-        
-        Node* result = NULL;
-        if(a->data <= b->data){
-            result = a;
-            result->bottom = merge(a->bottom,b);
-        }
-        else{
-            result = b;
-            result->bottom = merge(a, b->bottom);
-        }
-        
-        return result;
-    }
-    
-    
-    Node *flatten(Node *root)
+using namespace std;
+
+void printList(Node *Node)
+{
+    while (Node != NULL)
     {
-        // Your code here
-    
-        if(!root || !root->next)
-        return root;
-        
-        root->next = flatten(root->next);
-        
-        return merge(root, root->next);
+        printf("%d ", Node->data);
+        Node = Node->bottom;
     }
-};
+}
 
-
-//{ Driver Code Starts.
+Node* flatten (Node* root);
 
 int main(void) {
 
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, m, flag = 1, flag1 = 1;
-        struct Node * temp = NULL;
-        struct Node * head = NULL;
-        struct Node * pre = NULL;
-        struct Node * tempB = NULL;
-        struct Node * preB = NULL;
-        cin >> n;
+	int t;
+	cin>>t;
+	while(t--){
+    int n,m,flag=1,flag1=1;
+    struct Node * temp=NULL;
+	struct Node * head=NULL;
+	struct Node * pre=NULL;
+	struct Node * tempB=NULL;
+	struct Node * preB=NULL;
+		cin>>n;
         int work[n];
-        for (int i = 0; i < n; i++)
-            cin >> work[i];
-        for (int i = 0; i < n; i++) {
-            m = work[i];
-            --m;
-            int data;
-            scanf("%d", &data);
-            temp = new Node(data);
-            temp->next = NULL;
-            temp->bottom = NULL;
+		for(int i=0;i<n;i++)
+            cin>>work[i];
+		for(int i=0;i<n;i++){
+			m=work[i];
+			--m;
+			int data;
+			scanf("%d",&data);
+			temp = new Node(data);
+			temp->next = NULL;
+			temp->bottom = NULL;
+			
+			if(flag){
+				head = temp;
+				pre = temp;
+				flag = 0;
+				flag1 = 1;
+			}
+			else{
+				pre->next = temp;
+				pre = temp;
+				flag1 = 1;
+			}
+			for(int j=0;j<m;j++){
+				
+				int temp_data;
+				scanf("%d",&temp_data);
+				tempB = new Node(temp_data);
 
-            if (flag) {
-                head = temp;
-                pre = temp;
-                flag = 0;
-                flag1 = 1;
-            }
-            else {
-                pre->next = temp;
-                pre = temp;
-                flag1 = 1;
-            }
-            for (int j = 0; j < m; j++) {
+				if(flag1){
+					temp->bottom=tempB;
+					preB=tempB;
+					flag1=0;
+				}
+				else{
+					preB->bottom=tempB;
+					preB=tempB;
+				}
+			}
+		}
+		   Node *fun = head;
+		   Node *fun2=head;
 
-                int temp_data;
-                scanf("%d", &temp_data);
-                tempB = new Node(temp_data);
+            Node* root = flatten(head);
+            printList(root);
+            cout<<endl;
 
-                if (flag1) {
-                    temp->bottom = tempB;
-                    preB = tempB;
-                    flag1 = 0;
-                }
-                else {
-                    preB->bottom = tempB;
-                    preB = tempB;
-                }
-            }
-        }
-        Node *fun = head;
-        Node *fun2 = head;
-
-        Solution ob;
-        Node* root = ob.flatten(head);
-        printList(root);
-        cout << endl;
-
-    }
-    return 0;
+	}
+	return 0;
 }
 
 // } Driver Code Ends
+
+    
+Node* merge(Node* root1, Node* root2){
+    
+    if(!root1)
+    return root2;
+    else if(!root2)
+    return root1;
+    
+    Node* root = NULL;
+    
+    if(root1->data <= root2->data){
+        root = root1;
+        root->bottom = merge(root1->bottom, root2);
+    }else{
+        root = root2;
+        root->bottom = merge(root1, root2->bottom);
+    }
+    
+    return root;
+}   
+
+
+Node *flatten(Node *root)
+{
+   // Your code here
+   if(!root)
+   return NULL;
+   
+   Node* merged = flatten(root->next);
+   merged = merge(root, root->next);
+   
+   return merged;
+}
+
