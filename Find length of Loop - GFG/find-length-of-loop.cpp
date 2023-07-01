@@ -75,13 +75,12 @@ struct Node {
 
 //Function to find the length of a loop in the linked list.
 
-int findLen(Node* head, Node* slow, Node* fast){
-     
-     int count = 1;
-     
-     while(slow != fast){
-         fast = fast->next;
+int length(Node* slow, Node* fast){
+    
+    int count = 1;
+     while(fast != slow){
          count++;
+         fast = fast->next;
      }
      
      return count;
@@ -92,16 +91,20 @@ int countNodesinLoop(struct Node *head)
 {
     // Code here
     
-     int count = 0;
-     Node* slow = head, *fast = head;
-     
-        while(fast && fast->next){
-            fast= fast->next->next;
-            slow= slow->next;
-            
-            if(slow==fast)
-                return findLen(head,slow,fast->next);
-        }
+    if(!head)
+    return 0;
+    
+    Node* slow = head, *fast = head;
+    
+    while(fast && fast->next){
+        slow = slow->next;
+        fast = fast->next->next;
         
-       return count;
+        if(slow == fast){
+            return length(slow, fast->next);
+        }
+    }
+    
+    
+    return 0;
 }
