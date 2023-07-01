@@ -16,68 +16,51 @@ struct Node *start = NULL;
 
 
 // } Driver Code Ends
-/*
- 
-  Node is defined as
-  struct Node {
-    int data;
-    struct Node *next;
-    Node(int x) {
-        data = x;
-        next = NULL;
-    }
-};
 
-*/
+
 class Solution
 {
     public:
     //Function to sort a linked list of 0s, 1s and 2s.
     Node* segregate(Node *head) {
         
-        // Add code here
-        if(!head)
-        return NULL;
-        
-        Node* zero = new Node(-1);
-        Node* one = new Node(-1);
-        Node* two = new Node(-1);
-        
-        Node* Zh = zero, *Oh = one, *Th = two;
-        
-        while(head){
-            
-            if(head->data == 0){
-                Zh->next = head;
-                Zh = Zh->next;
+       if (!head || !head->next)
+            return head;
+
+        Node* zeroH = new Node(0);
+        Node* oneH = new Node(0);
+        Node* twoH = new Node(0);
+
+        Node* zero = zeroH;
+        Node* one = oneH;
+        Node* two = twoH;
+
+        Node* curr = head;
+        while (curr) {
+            if (curr->data == 0) {
+                zero->next = curr;
+                zero = zero->next;
+            } else if (curr->data == 1) {
+                one->next = curr;
+                one = one->next;
+            } else {
+                two->next = curr;
+                two = two->next;
             }
-            else if(head->data == 1){
-                Oh->next = head;
-                Oh = Oh->next;
-            }
-            else{
-                Th->next = head;
-                Th = Th->next;
-            }
-            
-            head = head->next;
+            curr = curr->next;
         }
+
+        zero->next = oneH->next ? oneH->next : twoH->next;
+        one->next = twoH->next;
+        two->next = nullptr;
+
+        head = zeroH->next;
         
-        if(one->next){
-            Zh->next = one->next;
-        }
-        else
-        Zh->next = two->next;
-        
-        
-        Oh->next = two->next;
-        Th->next=NULL;
-        head=zero->next;
-        delete zero;
-        delete one;
-        delete two;
+        delete oneH;
+        delete zeroH;
+        delete twoH;
+
         return head;
-          
     }
 };
 
