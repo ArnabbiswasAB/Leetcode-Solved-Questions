@@ -44,76 +44,65 @@ void printList(Node* n)
 
 
 // } Driver Code Ends
-/* node for linked list:
 
-struct Node {
-    int data;
-    struct Node* next;
-    Node(int x) {
-        data = x;
-        next = NULL;
-    }
-};
-
-*/
 
 class Solution
 {
     public:
     //Function to add two numbers represented by linked list.
-    Node* reverse(Node* node){
-     
-     Node* prev= NULL, *curr = node, *next = NULL;
-     
-     while(curr){
-         next = curr->next;
-         curr->next = prev;
-         prev = curr;
-         curr = next;
-     }
-     
-     return prev;
+    Node* addDigits(Node* first, Node* second, int &carry){
+        
+        if(!first && !second)
+        return NULL;
+        
+        Node* newNode = new Node(-1);
+        newNode->next = addDigits(first->next, second->next, carry);
+        
+        newNode->data = (first->data + second->data + carry)%10;
+        carry = (first->data + second->data + carry)/10;
+        
+        return newNode;
     }
     
     
     struct Node* addTwoLists(struct Node* first, struct Node* second)
     {
         // code here
-        if(!first)
-        return second;
-        else if(!second)
-        return first;
         
-        first = reverse(first);
-        second = reverse(second);
+        Node* ptr1 = first, *ptr2 = second;
         
-        Node* head = new Node(0);
-        Node* curr = head;
-        int carry = 0;
-        
-        
-        while(first || second || carry){
+        while(ptr1 || ptr2){
             
-            int n1 = (first)?first->data:0;
-            int n2 = (second)?second->data:0;
-            
-            int sum = n1 + n2 + carry;
-            Node* newNode = new Node(sum%10);
-            curr->next = newNode;
-            curr = curr->next;
-            
-            carry = sum/10;
-            
-            if(first)
-            first = first->next;
-            
-            if(second)
-            second = second->next;
+            if(ptr1 == NULL){
+                Node* newNode = new Node(0);
+                newNode->next = first;
+                first = newNode;
+                
+                ptr2 = ptr2->next;
+            }else if(ptr2 == NULL){
+                Node* newNode = new Node(0);
+                newNode->next = second;
+                second = newNode;
+                
+                ptr1 = ptr1->next;
+            }else{
+                ptr1 = ptr1->next;
+                ptr2 = ptr2->next;
+            }
         }
         
-        curr->next = NULL;
-        head = reverse(head->next);
-        return head;
+        Node* dummy = new Node(-1);
+        int carry = 0;
+        
+        dummy->next = addDigits(first, second, carry);
+        
+        if(carry != 0){
+            Node* newNode = new Node(carry);
+            newNode->next = dummy->next;
+            dummy->next = newNode;
+        }
+        
+        return dummy->next;
     }
 };
 
