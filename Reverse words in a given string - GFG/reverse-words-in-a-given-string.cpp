@@ -11,24 +11,22 @@ class Solution
     string reverseWords(string s) 
     { 
         // code here 
-        s.insert(s.begin(),'.');
         reverse(s.begin(),s.end());
-        int i=0, j=0, n = s.size();
         
+        int i=0,n=s.length();
         
-        while(i<n){
+        for(i=0; i<n; i++){
+            int j=i;
             
-            if(s[i] == '.'){
-                
-                reverse(s.begin()+j, s.begin()+i);
-                j = i+1;
-            }
+            while(j<n && s[j] != '.')
+            j++;
             
-            i++;
+            reverse(s.begin()+i, s.begin()+j);
+            
+            i = j;
         }
         
-        s.erase(s.begin() + n - 1);
-        
+        reverse(s.begin()+i, s.end());
         return s;
     } 
 };
