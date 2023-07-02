@@ -8,40 +8,45 @@ using namespace std;
 // } Driver Code Ends
 //User function template for C++
 
-//User function template for C++
-
 class Solution
 {
   public:
-    long long int atMostK (string s, int k)
-    {
-    	if (k < 0) return 0;
+    long long int helper(string s, int k){	
+        
+        if(k < 0)
+        return 0;
+        
+        int mp[26] = {0};
+    	int i=0, j=0, count=0;
+    	long long res = 0;
+    	
     
-    	int i = 0, j = 0, cnt = 0;
-    	long long int res = 0;
-    	int m[26] = {0};
-    
-    	while (j < s.length ())
-    	{
-    		m[s[j] - 'a']++;
-    		if (m[s[j] - 'a'] == 1) cnt++;
-    
-    		while (cnt > k)
-    		{
-    			m[s[i] - 'a']--;
-    			if (m[s[i] - 'a'] == 0) cnt--;
-    
-    			i++;
-    		}
-    
-    		res += (j - i + 1);
-    		j++;
+    	while(i<s.length()){
+    	    
+    	    mp[s[i] - 'a']++;
+    	    if(mp[s[i] - 'a'] == 1)
+    	    count++;
+    	    
+    	    while(count>k){
+    	        mp[s[j] - 'a']--;
+    	        if(mp[s[j] - 'a'] == 0)
+    	        count--;
+    	        
+    	        j++;
+    	    }
+    	    
+    	    
+    	    res += (i-j+1);
+    	    
+    	    i++;
     	}
+    	
     	return res;
-    }
+}
 
     long long int substrCount (string s, int k) {
-    	return atMostK (s, k) - atMostK (s, k - 1);
+    	
+    	return helper(s,k) - helper(s,k-1);
     }
 };
 
