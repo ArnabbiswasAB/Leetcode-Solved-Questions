@@ -7,30 +7,33 @@ using namespace std;
 class Solution {
   public:
     int totalFruits(int N, vector<int> &fruits) {
-        
-        unordered_map<int,int>mp;
-        int i=0, j=0, ans = 0;
-        
-        while(i<N){
-             
-             mp[fruits[i]]++;
-             
-             while(mp.size() > 2){
-                 mp[fruits[j]]--;
-                 
-                 if(mp[fruits[j]] == 0)
-                 mp.erase(fruits[j]);
-                 
-                 j++;
-             }
-             
-             ans = max(ans, i - j + 1);
-             i++;
-        }
-        
-        return ans;
+           
+           unordered_map<int,int>mp;
+           int ans=0,i=0,j=0;
+           
+           
+           while(i<N){
+               
+               mp[fruits[i]]++;
+               
+               while(mp.size()>2){
+                   mp[fruits[j]]--;
+                   
+                   if(mp[fruits[j]] == 0)
+                   mp.erase(fruits[j]);
+                   
+                   j++;
+               }
+               
+               ans = max(ans, i-j+1);
+               i++;
+           }
+           
+           return ans;
     }
 };
+
+
 
 //{ Driver Code Starts.
 
