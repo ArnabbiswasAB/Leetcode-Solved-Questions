@@ -12,10 +12,11 @@ class Solution {
     string minWindow(string str1, string str2) {
         // Write your Code here
         
-        string window = "";
-        int j=0, min=str1.length();
+        string ans = "";
+        int min = str1.length();
+        int j=0;
         
-        for(int i=0; i<str1.size(); i++){
+        for(int i=0; i<str1.length(); i++){
             
             if(str1[i] == str2[j]){
                 j++;
@@ -31,21 +32,21 @@ class Solution {
                         i--;
                     }
                     
-                    i++;
-                    j++;
+                    i++; j++;
                     
                     if(end - i < min){
                         min = end - i;
-                        window = "";
+                        ans = "";
                         
                         for(int j=i; j<=end; j++){
-                            window += str1[j];
+                            ans += str1[j];
                         }
                     }
                 }
             }
         }
-        return window;
+        
+        return ans;
     }
 };
 
