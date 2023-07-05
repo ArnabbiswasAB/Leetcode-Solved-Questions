@@ -7,23 +7,15 @@ using namespace std;
 //User function template for C++
 class Solution{
 public:	
-	int search(int nums[], int n){
+	int search(int A[], int N){
 	    //code
+	    int res = 0;
 	    
-	       int low=0,high=n-1;
-	    while(low<=high)
-	    {
-	        int mid=low+(high-low)/2;
-	        
-	        if( (mid%2==0 and nums[mid]==nums[mid+1]) ||
-	        (mid%2==1 and nums[mid]==nums[mid-1]) ) {
-	            low=mid+1;
-	        } else
-	        {
-	            high=mid-1;
-	        }
+	    for(int i=0; i<N; i++){
+	        res ^= A[i];
 	    }
-	    return nums[low];
+	    
+	    return res;
 	}
 };
 
