@@ -12,23 +12,21 @@ public:
     int findZeroes(int arr[], int n, int m) {
         // code here
         
-        int  left = 0, ans = 0, i = 0, zero = 0;
-        
+        int i=0,j=0,zero=0,ans=0;
         
         while(i<n){
             
             if(arr[i] == 0)
-               zero++;
-               
-            while(zero > m){
-                
-                if(arr[left] == 0)
+            zero++;
+            
+            while(zero>m){
+                if(arr[j] == 0)
                 zero--;
                 
-                left++;
+                j++;
             }
             
-            ans = max(ans, i - left + 1);
+            ans = max(ans, i-j+1);
             i++;
         }
         
