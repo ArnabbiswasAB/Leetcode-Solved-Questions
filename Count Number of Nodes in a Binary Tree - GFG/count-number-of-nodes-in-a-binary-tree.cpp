@@ -27,42 +27,41 @@ struct Node {
 
 class Solution {
   public:
-  
-  int findLeft(Node* root){
-      
-      int left = 0;
-      while(root){
-          left++;
-          root = root->left;
-      }
-      
-      return left;
-  }
-  
-  
-  int findRight(Node* root){
-      
-      int left = 0;
-      while(root){
-          left++;
-          root = root->right;
-      }
-      
-      return left;
-  }
-  
-  
+    int dfsLeft(Node* root){
+        
+        int cnt = 0;
+        
+        while(root){
+            cnt++;
+            root = root->left;
+        }
+        
+        return cnt;
+    }
+    
+    int dfsRight(Node* root){
+        
+        int cnt = 0;
+        
+        while(root){
+            cnt++;
+            root = root->right;
+        }
+        
+        return cnt;
+    }
+    
     int countNodes(Node* root) {
         // Write your code here
         
         if(!root)
         return 0;
         
-        int left = findLeft(root);
-        int right = findRight(root);
+        int left = dfsLeft(root);
+        int right = dfsRight(root);
         
         if(left == right)
-        return (1 << left) - 1;
+        return (1<<left) - 1;
         
         return 1 + countNodes(root->left) + countNodes(root->right);
     }
