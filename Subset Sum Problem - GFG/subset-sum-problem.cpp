@@ -9,58 +9,37 @@ using namespace std;
 
 class Solution{   
 public:
-    bool helper(int i, vector<int>& arr, int sum, vector<vector<int>> &dp){
+    bool helper(vector<int>& arr, int ind, int sum, vector<vector<int>>& dp){
         
         if(sum == 0)
-        return true;
+        return 1;
         
-        if(i == 0){
-           return arr[0] == sum;
+        if(ind == 0){
+            if(sum == arr[0])
+            return 1;
+            
+            return 0;
         }
         
-        if(dp[i][sum] != -1)
-        return dp[i][sum];
+        if(dp[ind][sum] != -1)
+        return dp[ind][sum];
         
-        bool notTaken = helper(i-1,arr,sum, dp);
-        bool taken = false;
+        bool notTake = helper(arr, ind-1, sum, dp);
+        bool take = false;
         
-        if(arr[i] <= sum)
-        taken = helper(i-1,arr, sum - arr[i], dp);
-        
-        
-        return dp[i][sum] = notTaken || taken;
+        if(arr[ind] <= sum)
+           take = helper(arr, ind-1, sum - arr[ind], dp);
+           
+        return dp[ind][sum] = notTake || take;   
     }
     
     
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         int n = arr.size();
-        vector<vector<int>> dp(n, vector<int>(sum+1, 0));
-      //  return helper(n-1,arr,sum,dp);
-      
-      for(int i = 0; i<sum+1; i++){
-          if(arr[0] == i)
-             dp[0][i] = true;
-      }
-      
-      dp[0][0] = true;
-      
-      
-      for(int i=1; i<n; i++){
-          for(int j=0; j<sum+1; j++){
-              
-              bool notTaken = dp[i-1][j];
-              bool take = false;
-              
-              if(arr[i] <= sum)
-                 take = dp[i-1][j-arr[i]];
-                 
-               dp[i][j] = notTaken || take;     
-          }
-      }
-      
-      
-      return dp[n-1][sum];
+        vector<vector<int>> dp(n, vector<int>(sum+1,-1));
+        
+        return helper(arr, n-1, sum, dp);
     }
 };
 
