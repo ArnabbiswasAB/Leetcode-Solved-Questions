@@ -5,73 +5,48 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-  int mod = 1e9 + 7;
-    
-    int f(int i,int sum, vector<int>& arr, vector<vector<int>>& dp){
-        
-        if(i == 0){
-            if(sum == 0 && arr[0] == 0)
+  int mod = 1e9+7;
+  
+    int helper(vector<int>& arr, int ind, int tar, vector<vector<int>>& dp){
+         
+        if(ind == 0){
+            if(arr[0] == 0 && tar == 0)
             return 2;
-            if(sum == 0 || arr[0] == sum)
+            else if(arr[0] == tar || tar == 0)
             return 1;
             
             return 0;
-        }
+        }      
         
-        if(dp[i][sum] != -1)
-        return dp[i][sum];
         
-        int notTaken = f(i-1,sum,arr,dp)%mod;
-        int taken = 0;
+        if(dp[ind][tar] != -1)
+        return dp[ind][tar];
         
-        if(arr[i] <= sum)
-           taken = f(i-1,sum - arr[i], arr, dp)%mod;
-           
-        return dp[i][sum] = (notTaken + taken)%mod;   
+        int nt = helper(arr, ind-1, tar, dp)%mod;
+        int t = 0;
+        
+        if(arr[ind] <= tar)
+          t = helper(arr, ind-1, tar-arr[ind], dp)%mod;
+          
+        return dp[ind][tar] = (nt + t)%mod;  
     }
     
     
-    
-    int countPartitions(int n, int diff, vector<int>& num) {
+    int countPartitions(int n, int diff, vector<int>& arr) {
+        // Code here
         
-        long long sum = 0;
+        int sum = 0;
         for(int i=0; i<n; i++){
-            sum += num[i];
+            sum += arr[i];
         }
         
-       if(sum - diff < 0)
-       return 0;
-       
-       if((sum-diff)%2 == 1)
-       return 0;
-       
-       int tar = (sum - diff)/2;
+        if((sum - diff) % 2 != 0 || (sum - diff < 0))
+        return 0;
         
-        vector<vector<int>>dp(n, vector<int>(tar+1, 0));
-       // return f(n-1, target, arr, dp);
-       
-       
-        if(num[0] == 0)
-        dp[0][0] =2;  // 2 cases -pick and not pick
-        else
-        dp[0][0] = 1;  // 1 case - not pick
-    
-    if(num[0]!=0 && num[0]<=tar) 
-    dp[0][num[0]] = 1;  // 1 case -pick
-    
-    for(int ind = 1; ind<n; ind++){
-        for(int target= 0; target<=tar; target++){
-            
-            int notTaken = dp[ind-1][target];
-    
-            int taken = 0;
-                if(num[ind]<=target)
-                    taken = dp[ind-1][target-num[ind]];
+        int tar = (sum - diff)/2;
         
-            dp[ind][target]= (notTaken + taken)%mod;
-        }
-    }
-    return dp[n-1][tar];
+        vector<vector<int>> dp(n, vector<int>(tar+1,-1));
+        return helper(arr, n-1, tar, dp);
     }
 };
 
