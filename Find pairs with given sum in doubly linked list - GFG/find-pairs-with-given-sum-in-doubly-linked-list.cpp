@@ -18,17 +18,7 @@ public:
 // } Driver Code Ends
 //User function Template for C++
 
-/* Doubly linked list node class
-class Node
-{
-public:
-    int data;
-    Node *next, *prev;
-    Node(int val) : data(val), next(NULL), prev(NULL)
-    {
-    }
-};
-*/
+
 
 class Solution
 {
@@ -38,26 +28,22 @@ public:
         // code here
         
         vector<pair<int,int>>ans;
-        Node* tail = head, *start = head;
+        
+        Node* curr = head, *tail = head;
         
         while(tail->next)
-        {
-            tail = tail->next;
-        }
+        tail = tail->next;
         
-        
-        while(start != tail && start->data < tail->data){
+        while(curr != tail && curr->data < tail->data){
             
-            if(start->data + tail->data == target){
-                ans.push_back({start->data,tail->data});
-               // ans.push_back({tail->data, start->data});
-                start = start->next;
+            if(curr->data + tail->data == target){
+                ans.push_back({curr->data, tail->data});
+                
+                curr = curr->next;
                 tail = tail->prev;
-            }
-            else if(start->data + tail->data < target){
-                start = start->next;
-            }
-            else{
+            }else if(curr->data + tail->data < target){
+                curr = curr->next;
+            }else{
                 tail = tail->prev;
             }
         }
