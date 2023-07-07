@@ -112,45 +112,29 @@ int main() {
 // } Driver Code Ends
 
 
-/* A binary tree node
-
-struct Node
-{
-    int data;
-    struct Node* left;
-    struct Node* right;
-    
-    Node(int x){
-        data = x;
-        left = right = NULL;
-    }
-};
- */
-
 //Function to return a list containing elements of left view of the binary tree.
-void helper(Node* root, vector<int> & ans,int level, int &maxi){
+void helper(Node* root, int level, int&maxi, vector<int>& ans){
     
     if(!root)
     return;
     
     if(level > maxi){
-        maxi = level;
         ans.push_back(root->data);
+        maxi = level;
     }
     
-    helper(root->left,ans,level+1,maxi);
-    helper(root->right, ans, level+1, maxi);
+    helper(root->left, level+1, maxi, ans);
+    helper(root->right, level+1, maxi, ans);
 }
 
 vector<int> leftView(Node *root)
 {
-   // Your code here
+   if(!root)
+   return {};
+   
+   int level = 0, maxi = -1;
    vector<int>ans;
    
-   if(!root)
-   return ans;
-   
-   int maxi = -1;
-   helper(root, ans,0, maxi);
+   helper(root, level, maxi, ans);
    return ans;
 }
