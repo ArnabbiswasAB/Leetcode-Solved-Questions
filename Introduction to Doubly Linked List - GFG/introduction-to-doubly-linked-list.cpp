@@ -56,22 +56,16 @@ class Solution {
     Node* constructDLL(vector<int>& arr) {
         // code here
         
-        int i=0, n = arr.size();
-        Node* prev = NULL, *head = NULL;
+        Node* head = new Node(arr[0]);
+        Node* curr = head;
         
-        for(int i=0; i<n; i++){
+        for(int i=1; i<arr.size(); i++){
             
-            Node* new_node = new Node(arr[i]);
+            Node* node = new Node(arr[i]);
+            curr->next = node;
+            node->prev = curr;
             
-            if(head == NULL)
-            head = new_node;
-            
-            new_node->next = NULL;
-            new_node->prev = prev;
-            if(prev != NULL)
-              prev->next = new_node;
-              
-            prev = new_node;
+            curr = curr->next;
         }
         
         return head;
