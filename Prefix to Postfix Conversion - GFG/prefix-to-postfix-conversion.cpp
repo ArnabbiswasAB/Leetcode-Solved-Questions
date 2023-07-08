@@ -9,42 +9,39 @@ using namespace std;
 
 class Solution {
   public:
-    
-    bool operators(char ch){
-      
-      if(ch == '+' || ch == '-' || ch == '/' || ch == '*')
-      return true;
-      
-      return false;
-  }
-  
-    string preToPost(string pre_exp) {
-    
-         int n = pre_exp.size();
-         stack<string>st;
-         
-         
-          for(int i = n-1; i>=0; i--){
-              
-              if(operators(pre_exp[i])){
-                  
-                  string op1 = st.top();
-                  st.pop();
-                  string op2 = st.top();
-                  st.pop();
-                  
-                  string result =  op1 + op2 + pre_exp[i];
-                  st.push(result);
-              }
-              else{
-                  st.push(string(1, pre_exp[i]));
-              }
-          }
-          
-          
-          return st.top();
+    bool operatorsch(char ch){
+        
+        if(ch == '/' || ch == '*' || ch == '+' || ch == '-')
+        return true;
+        
+        return false;
     }
     
+    
+    string preToPost(string s) {
+        
+        stack<string>st;
+        int n = s.length();
+    
+        
+        for(int i=n-1; i>=0; i--){
+            
+            if(operatorsch(s[i])){
+                
+                string a = st.top();
+                st.pop();
+                string b = st.top();
+                st.pop();
+                
+                string res =  a + b + s[i];
+                st.push(res);
+            }else{
+                st.push(string(1,s[i]));
+            }
+        }
+        
+        return st.top();
+    }
 };
 
 //{ Driver Code Starts.
