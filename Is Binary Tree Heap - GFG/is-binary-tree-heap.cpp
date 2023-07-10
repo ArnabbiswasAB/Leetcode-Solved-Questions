@@ -76,54 +76,58 @@ Node *buildTree(string str) {
 
 
 // } Driver Code Ends
-// User Function template for C++
+
+
 
 class Solution {
-  
-    int countNodes(Node *tree){
-        if(!tree)return 0;
+  public:
+    int counting(Node* root){
+        if(!root)
+        return 0;
         
-        return 1 + countNodes(tree->left)+countNodes(tree->right);
+        return 1 + counting(root->left) + counting(root->right);
     }
     
-    
-    bool isCBT(Node *tree,int index,int &count){
-        if(!tree)return 1;
+    bool cbt(Node* root, int index, int &count){
         
-        if(index >= count)return 0;
+        if(!root)
+        return true;
         
+        if(index >= count)
+        return false;
         else{
-            bool left = isCBT(tree->left,2*index+1,count);
-            bool right = isCBT(tree->right,2*index+2,count);
+            bool left = cbt(root->left, index*2+1, count);
+            bool right = cbt(root->right, index*2+2, count);
+            
             return left && right;
         }
     }
     
-    
-    bool isMaxHeap(Node *tree){
-        if(!tree->left && !tree->right)
-        return 1;
+    bool isMaxTree(Node* root){
+     
+        if(!root->left && !root->right)
+        return true;
         
-        if(!tree->right)
-        return tree->data >= tree->left->data;
-        
+        if(!root->right)
+        return root->data >= root->left->data;
         else{
-            bool left=isMaxHeap(tree->left);
-            bool right = isMaxHeap(tree->right);
+            bool left = isMaxTree(root->left);
+            bool right = isMaxTree(root->right);
             
-            bool cur = (tree->data >= tree->left->data) && (tree->data >= tree->right->data);
+            bool cur = (root->data >= root->left->data) && (root->data >= root->right->data);
             return left && right && cur;
         }
     }
     
-  public:
-    bool isHeap(struct Node* tree) {
-        // code here
-        int index{};
-        int count= countNodes(tree);
-        return isCBT(tree,index,count) && isMaxHeap(tree);
-    }
     
+    bool isHeap(struct Node* root) {
+        // code here
+        
+        int index = 0;
+        int count = counting(root);
+        
+        return cbt(root, index, count) && isMaxTree(root);
+    }
 };
 
 //{ Driver Code Starts.
