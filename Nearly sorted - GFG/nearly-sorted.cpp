@@ -7,36 +7,32 @@ using namespace std;
 class Solution
 {
     public:
-   
-     vector <int> nearlySorted(int arr[], int num, int K){
+    //Function to return the sorted array.
+    vector <int> nearlySorted(int arr[], int n, int k){
         // Your code here
-        vector <int> res;
-        //implementing MinHeap using priority queue and 
-        //storing first k elements in it.
-        priority_queue<int, vector<int>, greater<int>> pq(arr, arr+K + 1); 
-	
-	    for(int i = K + 1; i<num; ++i)
-	    {
-	        //storing top element from priority queue in list and popping it.
-	        res.push_back (pq.top ());
-	        pq.pop();
-	        
-	        //pushing the current array element in priority queue.
-	        pq.push(arr[i]);
-	    }
-	    
-	    //using a loop till priority queue becomes empty.
-	    while(!pq.empty())
-	    {
-	        //storing top element from priority queue in list and popping it.
-	        res.push_back (pq.top ());
-	        pq.pop();
-	    }
-	    //returning the list.
-	    return res;
         
+        vector<int>ans;
+        priority_queue<int, vector<int>, greater<int>> pq;
+        
+        for(int i=0; i<=k; i++){
+            pq.push(arr[i]);
+        }
+        
+        for(int i=k+1; i<n; i++){
+            ans.push_back(pq.top());
+            
+            pq.pop();
+            
+            pq.push(arr[i]);
+        }
+        
+        while(!pq.empty()){
+            ans.push_back(pq.top());
+            pq.pop();
+        }
+        
+        return ans;
     }
-   
 };
 
 //{ Driver Code Starts.
