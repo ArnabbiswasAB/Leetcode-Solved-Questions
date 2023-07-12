@@ -87,74 +87,45 @@ Node* buildTree(string str)
 
 // } Driver Code Ends
 
-
-/*
-struct Node {
-    int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
-        left = right = NULL;
-    }
-};
-*/
 class Solution
 {
     public:
-    //Function to return a list of integers denoting the node 
-    //values of both the BST in a sorted order.
     vector<int> merge(Node *root1, Node *root2)
     {
-       //Your code here
-         vector<int> result;
-
-        stack<Node *> s1, s2;
-        while(true)
-
-        {
-            if(root1)
-            {    
-                s1.push(root1);
-                root1 = root1->left;
-            }
-
-            else if(root2)
-            {
-                s2.push(root2);
-                root2 = root2->left;
-            }
-
-            else if(!s1.empty() || !s2.empty())
-            {
-                root1 = s1.empty() ? new Node(INT_MAX) : s1.top();
-                root2 = s2.empty() ? new Node(INT_MAX) : s2.top();
-                if(root1->data <= root2->data)
-                {
-                    result.push_back(root1->data);
-                    s1.pop();
-                    root1 = root1->right;
-                    root2 = NULL;
-                }
-
-                else if(root1->data > root2->data)
-                {
-                    result.push_back(root2->data);
-                    s2.pop();
-                    root2 = root2->right;
-                    root1 = NULL;
-                }
-            }
-
-            else
-                break;
-        }
-        return result;
+       vector<int>ans;
+       stack<Node*>st1, st2;
+       
+       while(true){
+           
+           if(root1){
+               st1.push(root1);
+               root1 = root1->left;
+           }else if(root2){
+               st2.push(root2);
+               root2 = root2->left;
+           }else if(!st1.empty() || !st2.empty()){
+               root1 = st1.empty()?new Node(INT_MAX):st1.top();
+               root2 = st2.empty()?new Node(INT_MAX):st2.top();
+               
+               if(root1->data <= root2->data){
+                   ans.push_back(root1->data);
+                   st1.pop();
+                   root1 = root1->right;
+                   root2 = NULL;
+               }else if(root1->data > root2->data){
+                   ans.push_back(root2->data);
+                   st2.pop();
+                   root2 = root2->right;
+                   root1 = NULL;
+               }
+           }else{
+               break;
+           }
+       }
+       
+       return ans;
     }
 };
-
-
 
 //{ Driver Code Starts.
 int main() {
