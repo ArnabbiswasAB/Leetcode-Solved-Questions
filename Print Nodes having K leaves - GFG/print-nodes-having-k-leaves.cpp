@@ -88,45 +88,40 @@ Node* buildTree(string str)
 
 
 // } Driver Code Ends
-/*The Node is defined as follows:
-struct Node
-{
-    int data ;
-    struct Node * left, * right ;
-};
-*/
-
 
 class Solution{
   public:
-    int solve(Node* root, int k, vector<int>& ans) {
-        if(!root)
-            return 0;
+    
+    int helper(Node* root, int k, vector<int>& ans){
         
-        if(!root->left && !root->right)
-            return 1;
-            
-        int lh = solve(root->left, k, ans);
-        int rh = solve(root->right, k, ans);
-        
-        if(lh + rh == k)
-            ans.push_back(root->data);
-            
-        return (lh + rh);
+       if(!root)
+       return 0;
+       
+       if(!root->left && !root->right)
+       return 1;
+       
+       int left = helper(root->left, k, ans);
+       int right = helper(root->right, k, ans);
+       
+       if(left + right == k)
+       ans.push_back(root->data);
+       
+       return left + right;
     }
     
     
     vector<int> btWithKleaves(Node *root, int k)
     { 
-       if(!root) 
-       return {-1};
-       
-        vector<int> ans;
-        solve(root, k, ans);
+        
+        if(!root)
+        return {-1};
+        
+        vector<int>ans;
+        helper(root, k, ans);
         
         if(ans.size() == 0)
-            return {-1};
-            
+        return {-1};
+        
         return ans;
     }
 };
