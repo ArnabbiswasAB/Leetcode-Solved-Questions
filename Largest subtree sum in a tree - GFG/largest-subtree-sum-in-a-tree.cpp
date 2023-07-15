@@ -82,29 +82,29 @@ Node* buildTree(string str) {
 class Solution {
   public:
     // Function to find largest subtree sum.
-    int helper(Node* root, int &sum){
+    int helper(Node* root, int &ans){
         
         if(!root)
         return 0;
         
-        int left = helper(root->left, sum);
-        int right = helper(root->right, sum);
+        int left = helper(root->left, ans);
+        int right = helper(root->right, ans);
         
-        sum = max(sum, left + right + root->data);
+        ans = max(ans, left + right + root->data);
+        
         return left + right + root->data;
     }
     
-    
     int findLargestSubtreeSum(Node* root)
     {
-        //Write your code here
         
         if(!root)
         return 0;
         
-        int sum = INT_MIN;
-        sum = max(sum, helper(root, sum));
-        return sum;
+        int ans = INT_MIN;
+        
+        helper(root, ans);
+        return ans;
     }
 };
 
