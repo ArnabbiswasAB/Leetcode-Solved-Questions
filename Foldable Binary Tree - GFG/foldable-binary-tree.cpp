@@ -82,28 +82,27 @@ Node *buildTree(string str) {
 // } Driver Code Ends
 
 
+//Function to check whether a binary tree is foldable or not.
 
-bool IsFoldableUtils(Node* left,Node* right)
-{
-    if(left == NULL && right == NULL)
-    {
-        return true;
-    }
-    if(left == NULL || right == NULL)
-    {
-        return false;
-    }
-    return IsFoldableUtils(left->left,right->right) && 
-    IsFoldableUtils(left->right,right->left);
+bool helper(Node* a, Node* b){
+  
+  if(!a && !b)
+  return true;
+  
+  if(!a || !b)
+  return false;
+  
+  return helper(a->left, b->right) && helper(a->right, b->left);
 }
 
 bool IsFoldable(Node* root)
 {
     // Your code goes here
-    if(root == NULL){
-        return true;
-    }
-    return IsFoldableUtils(root->left,root->right);
+    
+    if(!root)
+    return true;
+    
+    return helper(root->left, root->right);
 }
 
 //{ Driver Code Starts.
