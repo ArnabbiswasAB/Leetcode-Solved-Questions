@@ -100,32 +100,39 @@ int main()
 // } Driver Code Ends
 
 
-void helper(Node* root, long long int &sum, long long curr){
+/* Tree node structure  used in the program
+ struct Node
+ {
+     int data;
+     Node* left, *right;
+}; */
+
+/*You are required to complete below method */
+
+void helper(Node* root, long long temp, long long &sum){
     
     if(!root)
-   {
-       return;
-   }
+    return;
     
     
-    if(!root->left && !root->right){
-        sum += (curr*10 + root->data);
+    if(!root->left && !root->right)
+    {
+        sum += (temp*10 + root->data);
         return;
     }
     
-    
-    helper(root->left, sum, curr*10 + root->data);
-    helper(root->right, sum, curr*10 + root->data);
+    helper(root->left, temp*10 + root->data, sum);
+    helper(root->right, temp*10 + root->data, sum);
 }
-
 
 long long treePathsSum(Node *root)
 {
+    //Your code here
     
     if(!root)
     return 0;
     
     long long sum = 0;
-    helper(root, sum, 0);
+    helper(root, 0, sum);
     return sum;
 }
