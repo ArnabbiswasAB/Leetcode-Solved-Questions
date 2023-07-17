@@ -93,24 +93,18 @@ int main()
 // } Driver Code Ends
 
 
-bool dfs(Node* root){
-    
-    if(!root->left && !root->right)
-    return true;
-    
-    if(!root->left || !root->right)
-    return false;
-    
-    return dfs(root->left) && dfs(root->right);
-}
-
-
+// Return True if the given Binary Tree is a Full Binary Tree. Else return False
 bool isFullTree (struct Node* root)
 {
-    
-if(!root)
-return true;
 
-return dfs(root);
-
+   if(!root)
+   return true;
+   
+   if(!root->left && !root->right)
+   return true;
+   
+   if(!root->left || !root->right)
+   return false;
+   
+   return isFullTree(root->left) && isFullTree(root->right);
 }
