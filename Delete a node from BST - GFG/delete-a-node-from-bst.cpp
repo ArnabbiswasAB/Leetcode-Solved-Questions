@@ -108,50 +108,50 @@ int main() {
 // } Driver Code Ends
 
 
+// Function to delete a node from BST.
 
-Node* findMin(Node* root){
-    
-    Node* curr = root;
-    
-    while(curr->left){
-        curr = curr->left;
-    }
-    
-    return curr;
+Node* minVal(Node* root){
+ 
+   if(!root)
+   return NULL;
+   
+   while(root->left){
+       root = root->left;
+   }
+   
+   return root;
 }
 
-// Function to delete a node from BST.
-Node *deleteNode(Node *root, int x) {
+
+Node *deleteNode(Node *root, int X) {
     // your code goes here
     
     if(!root)
     return NULL;
     
-    if(root->data < x){
-        root->right = deleteNode(root->right, x);
-    }
-    else if(root->data > x){
-        root->left = deleteNode(root->left, x);
+    if(root->data < X){
+        root->right = deleteNode(root->right, X);
+    }else if(root->data > X){
+        root->left = deleteNode(root->left, X);
     }else{
-        
         
         if(root->left == NULL){
             Node* temp = root->right;
             delete root;
             return temp;
-        }
-        else if(root->right == NULL){
+        }else if(root->right == NULL){
             Node* temp = root->left;
             delete root;
             return temp;
-        }
-        else{
-            Node * minNode = findMin(root->right);
-            root->data = minNode->data;
-            root->right = deleteNode(root->right, root->data);
+        }else{
+            Node* temp = minVal(root->right);
+            
+            root->data = temp->data;
+            root->right = deleteNode(root->right, temp->data);
+            
         }
     }
     
-    return root;
     
+    return root;
 }
