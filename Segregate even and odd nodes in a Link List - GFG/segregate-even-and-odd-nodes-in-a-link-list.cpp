@@ -27,55 +27,33 @@ void printList(Node* node)
 // } Driver Code Ends
 //User function template for C++
 
-/*
-struct Node
-{
-    int data;
-    struct Node* next;
-    
-    Node(int x){
-        data = x;
-        next = NULL;
-    }
-};
-*/
+
 class Solution{
 public:
     Node* divide(int N, Node *head){
-        // code here
-        
-        struct Node *oddD= new Node(0);
-        struct Node *evenD= new Node(0);
-        struct Node *odd=oddD;
-        struct Node *even=evenD;
-        struct Node *curr=head;
-        while(curr){
-            if((curr->data)%2==0){
-                even->next=curr;
-                even=even->next;
-                curr=curr->next;
-            }
-            else{
-                odd->next=curr;
-                odd=odd->next;
-                curr=curr->next;
-            }
-        }
-        
-        if(evenD->next==NULL){
-            return (head=oddD->next);
-        }
-        else if(oddD->next==NULL){
-            return (head=evenD->next);
-        }
-        
-        head=evenD->next;
-        even->next=oddD->next;
-        odd->next=NULL;
-        return head;
-        
-        
-    
+       
+       if(!head || !head->next)
+       return head;
+       
+       Node* oddH = new Node(0), *evenH = new Node(0);
+       Node* odd = oddH, *even = evenH, *curr = head;
+       
+       while(curr){
+         
+         if(curr->data % 2 == 0){
+             even->next = curr;
+             even = even->next;
+         }else{
+             odd->next = curr;
+             odd = odd->next;
+         }   
+         
+         curr = curr->next;
+       }
+       
+       even->next = oddH->next;
+       odd->next = NULL;
+       return evenH->next;
     }
 };
 
