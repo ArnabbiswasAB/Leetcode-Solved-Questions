@@ -70,40 +70,28 @@ int main()
 // } Driver Code Ends
 
 
-/* Link list Node 
-struct Node
-{
-    int data;
-    struct Node* next;
-    
-    Node(int x){
-        data = x;
-        next = NULL;
-    }
-};
-*/
+
 
 /*You are required to complete below method*/
 Node* deleteNode(Node *head,int x)
 {
-    //Your code here
-    
-    Node* dummy = new Node(0);
-    dummy->next = head;
-    Node* prev = dummy, * curr = head;
-    int i = 1;
-    
-    while(curr){
-        if(i == x){
-        prev->next = curr->next;
-        curr = prev->next;
-        }
-        
-        i++;
-        prev = prev->next;
-        if(curr)
-        curr = curr->next;
-    }
-    
-    return dummy->next;
+   
+   if(!head || x == 0)
+   return head;
+   
+   Node* curr = head, *prev = NULL;
+   
+   if(x == 1)
+   return head->next;
+   
+   for(int i=1; i<x && curr; i++){
+       prev = curr;
+       curr = curr->next;
+   }
+   
+  
+   prev->next = curr->next;
+   delete curr;
+   
+   return head;
 }
