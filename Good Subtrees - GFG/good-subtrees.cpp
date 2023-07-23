@@ -86,35 +86,32 @@ Node* buildTree(string str)
 
 class Solution{
 public:
-    unordered_set<int> dfs(Node* root, int k, int &ans){
-       
-       if(!root)
-       return {};
-       
-       unordered_set<int> left = dfs(root->left, k, ans);
-       unordered_set<int>right = dfs(root->right, k, ans);
-       
-       left.insert(root->data);
-       for(auto it : right)
-       {
-           left.insert(it);
-       }
-       
-       if(left.size() <= k)
-       ans++;
-       
-       return left;
-    } 
+    unordered_set<int> helper(Node* root, int &ans, int k){
+     
+     if(!root)
+     return {};
+     
+     unordered_set<int>left = helper(root->left, ans, k);
+     unordered_set<int>right = helper(root->right, ans, k);
+     
+     left.insert(root->data);
+     
+     for(auto it : right)
+        left.insert(it);
+        
+    if(left.size() <= k)
+    ans++;
     
+    return left;
+    }
     
     int goodSubtrees(Node *root,int k){
-        // Code here
         
         if(!root)
         return 0;
         
         int ans = 0;
-        dfs(root, k, ans);
+        helper(root, ans, k);
         return ans;
     }
 };
