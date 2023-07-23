@@ -111,41 +111,38 @@ int main()
 // } Driver Code Ends
 
 
-// you are required to complete this function
 
-Node* deletionBT(struct Node* root, int key)
+struct Node* deletionBT(struct Node* root, int key)
 {
+    
     if(!root)
     return NULL;
     
-    Node *temp, *del, *last;
+    Node *prev = nullptr, *curr = root, *last = nullptr, *del = NULL, *node = NULL;
+    
     queue<Node*>q;
     q.push(root);
     
     while(!q.empty()){
         
-        int n = q.size();
+       node = q.front();
+       q.pop();
         
-    //    while(n--){
-            temp = q.front();
-            q.pop();
-            
-            if(temp->data == key)
-              del = temp;
-              
-            if(temp->left){
-                q.push(temp->left);
-                last = temp;
-            }  
-            
-            if(temp->right){
-                q.push(temp->right);
-                last = temp;
-            }
-      //  }
+        if(node->data == key)
+        del = node;
+        
+        if(node->left){
+            last = node;
+            q.push(node->left);
+        }
+        
+        if(node->right){
+            last = node;
+            q.push(node->right);
+        }
     }
     
-    del->data = temp->data;
-    last->right == temp ? last->right = NULL : last->left = NULL;
+    del->data = node->data;
+    last->right == node ? last->right = NULL : last->left = NULL;
     return root;
 }
