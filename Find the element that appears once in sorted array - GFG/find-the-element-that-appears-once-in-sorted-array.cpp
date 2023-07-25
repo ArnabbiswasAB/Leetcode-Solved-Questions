@@ -9,42 +9,25 @@ using namespace std;
 class Solution
 {
   public:
-    int findOnce(int nums[], int n)
+    int findOnce(int arr[], int n)
     {
         //code here.
-        
         int low = 0, high = n-1;
         
-        while(low<=high){
+        while(low < high){
             
             int mid = low + (high - low)/2;
-            int left = mid - 1;
-            int right = mid + 1;
             
-            bool Index = (mid % 2 == 0)?1:0;
-            
-            if(left>=0 && nums[mid] == nums[left]){
-                
-                if(Index){
-                    high = left - 1;
-                }
-                else{
-                    low = right;
-                }
-            }
-            else if(right < n && nums[right] == nums[mid]){
-                
-                if(Index){
-                    low = right + 1;
-                }
-                else{
-                    high = left;
-                }
-            }
-            else{
-                return nums[mid];
+            if((mid%2 == 0 && arr[mid] == arr[mid+1]) ||
+            (mid%2 != 0 && arr[mid] == arr[mid-1]))
+            {
+                low = mid + 1;
+            }else{
+                high = mid;
             }
         }
+        
+        return arr[low];
     }
 };
 
