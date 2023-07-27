@@ -9,35 +9,34 @@ using namespace std;
 
 class Solution {
 public:
-    bool check(vector<int> stalls, int k, int mid){
+    bool isPossible(vector<int>& stalls, int mid, int n, int k){
         
-        int cnt = 1;
-        int last = stalls[0];
+        int count = 1, last = stalls[0];
         
-        for(int i=1; i<stalls.size(); i++){
+        for(int i=1; i<n; i++){
             
             if(stalls[i] - last >= mid){
-                cnt++;
                 last = stalls[i];
+                count++;
             }
         }
         
-        return (cnt >= k);
-       
+        if(count >= k)
+        return true;
+        
+        return false;
     }
-    
     
     int solve(int n, int k, vector<int> &stalls) {
     
         sort(stalls.begin(),stalls.end());
+        int low=1,high=stalls[n-1] - stalls[0], ans = -1;
         
-        int low = 1, high = stalls[n-1] - stalls[0], ans = 0;
-        
-        while(low <= high){
+        while(low<=high){
             
             int mid = low + (high - low)/2;
             
-            if(check(stalls,k,mid)){
+            if(isPossible(stalls, mid, n, k)){
                 ans = mid;
                 low = mid + 1;
             }else{
