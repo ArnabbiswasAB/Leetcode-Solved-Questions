@@ -9,42 +9,39 @@ using namespace std;
 
 class Solution {
 public:
-    bool isPossible(vector<int>& stalls, int mid, int n, int k){
+    
+    bool helper(vector<int>& stalls,int n,int k,int mid){
         
-        int count = 1, last = stalls[0];
+        int last = stalls[0], count = 1;
         
         for(int i=1; i<n; i++){
             
-            if(stalls[i] - last >= mid){
-                last = stalls[i];
+            if(stalls[i] - last>=mid){
+                last=stalls[i];
                 count++;
             }
         }
         
-        if(count >= k)
-        return true;
-        
-        return false;
+        return count>=k;
     }
     
     int solve(int n, int k, vector<int> &stalls) {
     
-        sort(stalls.begin(),stalls.end());
-        int low=1,high=stalls[n-1] - stalls[0], ans = -1;
-        
-        while(low<=high){
-            
-            int mid = low + (high - low)/2;
-            
-            if(isPossible(stalls, mid, n, k)){
-                ans = mid;
-                low = mid + 1;
-            }else{
-                high = mid - 1;
-            }
-        }
-        
-        return ans;
+       sort(stalls.begin(),stalls.end());
+       int low=1, high = stalls[n-1] - stalls[0], ans = -1;
+       
+       while(low <= high){
+           int mid = low + (high - low)/2;
+           
+           if(helper(stalls,n,k,mid)){
+               ans=mid;
+               low=mid+1;
+           }else{
+               high=mid-1;
+           }
+       }
+       
+       return ans;
     }
 };
 
