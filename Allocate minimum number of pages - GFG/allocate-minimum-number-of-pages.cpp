@@ -12,38 +12,45 @@ class Solution
 {
     public:
     //Function to find minimum number of pages.
-   bool check(int A[],int N,int students, int pages){
-     
-        int cnt = 0;
-  int sumAllocated = 0;
-  for (int i = 0; i < N; i++) {
-    if (sumAllocated + A[i] > pages) {
-      cnt++;
-      sumAllocated = A[i];
-      if (sumAllocated > pages) return false;
-    } else {
-      sumAllocated += A[i];
+    bool check(int A[], int N, int M, int mid){
+        
+        int sum = 0, count = 0;
+        
+        for(int i=0; i<N; i++){
+            
+            if(A[i] > mid)
+            return false;
+            
+            sum += A[i];
+            
+            if(sum > mid){
+                count++;
+                sum = A[i];
+            }
+        }
+        
+        if(sum > 0)
+        count++;
+        
+        return count<=M;
     }
-  }
-  if (cnt < students) return true;
-  return false;
-    }
-    
     
     int findPages(int A[], int N, int M) 
     {
-        //code here
         
-        if(N<M)
-        return -1;
+          if(N<M)
+            return -1;
         
-        int low = 1, high = 0, ans = -1;
+        int sum = 0, low = 0;
         for(int i=0; i<N; i++){
-            high += A[i];
+            low = min(low,A[i]);
+            sum += A[i];
         }
         
-        while(low <= high){
-          
+        int high = sum, ans = -1;
+        
+        while(low<=high){
+            
             int mid = low + (high - low)/2;
             
             if(check(A, N, M, mid)){
@@ -52,7 +59,7 @@ class Solution
             }else{
                 low = mid + 1;
             }
-        } 
+        }
         
         return ans;
     }
