@@ -11,23 +11,19 @@ class Solution{
     //Function to find the sum of contiguous subarray with maximum sum.
     long long maxSubarraySum(int arr[], int n){
         
-        // Your code here
-        long long sum = 0, max_till = INT_MIN;
+        long long sum = 0, ans = INT_MIN;
         
         for(int i=0; i<n; i++){
             
             sum += arr[i];
             
-            if(max_till < sum){
-                max_till = sum;
-            }
+            ans = max(ans, sum);
             
-            if(sum < 0){
-                sum = 0;
-            }
+            if(sum < 0)
+            sum = 0;
         }
         
-        return max_till;
+        return ans;
     }
 };
 
