@@ -5,13 +5,12 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int factorial(int n){
+    int factorial(int val){
         
-         int fact = 1;
-   for (int i = 1; i <= n; i++) {
-      fact = fact * i;
-   }
-   return fact;
+        if(val <= 1)
+        return 1;
+        
+        return val * factorial(val-1);
     }
     
     int isStrong(int N) {
